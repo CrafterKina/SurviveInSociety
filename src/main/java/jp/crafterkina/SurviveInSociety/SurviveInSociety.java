@@ -17,7 +17,7 @@ public class SurviveInSociety implements IFMLStateEvents{
 
     public static final String PARENT_PACKAGE = "jp.crafterkina.SurviveInSociety";
 
-    @SidedProxy(modId = PARENT_PACKAGE, clientSide = PARENT_PACKAGE + "client.ClientProxy", serverSide = PARENT_PACKAGE + "server.ServerProxy")
+    @SidedProxy(modId = PARENT_PACKAGE, clientSide = PARENT_PACKAGE + "client.ClientProxy", serverSide = PARENT_PACKAGE + "common.CommonProxy")
     private static IFMLStateEvents proxy;
 
     @Instance
