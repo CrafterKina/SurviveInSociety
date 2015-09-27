@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package jp.crafterkina.SurviveInSociety.common;
+package jp.crafterkina.SurviveInSociety;
 
 import jp.crafterkina.KinaCore.misclib.base.fle.AbstractFMLStateEvent;
 
