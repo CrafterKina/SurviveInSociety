@@ -12,14 +12,14 @@ public enum EnumItem{
     ;
 
     public static final EnumItem[] values = values();
-    private Item item;
+    private final Item item;
 
     EnumItem(Item item){
         this.item = item;
     }
 
     EnumItem(){
-
+        this(new Item());
     }
 
     public static void registerItems(){
