@@ -6,9 +6,15 @@
 package jp.crafterkina.SurviveInSociety.block;
 
 import com.google.common.base.CaseFormat;
+import jp.crafterkina.SurviveInSociety.SurviveInSociety;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -67,6 +73,18 @@ public enum EnumBlock{
 
     @SideOnly(Side.CLIENT)
     public static void registerModels(){
+        for(EnumBlock value : values){
+            ItemMeshDefinition definition = value.registerModel();
+            if(definition == null) continue;
+            ModelLoader.setCustomMeshDefinition(value.item, definition);
+        }
+    }
 
+    public ItemMeshDefinition registerModel(){
+        return new ItemMeshDefinition(){
+            public ModelResourceLocation getModelLocation(ItemStack stack){
+                return new ModelResourceLocation(new ResourceLocation(SurviveInSociety.PARENT_PACKAGE, name), "inventory");
+            }
+        };
     }
 }
