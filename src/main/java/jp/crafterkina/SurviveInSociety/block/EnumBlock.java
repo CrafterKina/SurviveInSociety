@@ -5,8 +5,10 @@
 
 package jp.crafterkina.SurviveInSociety.block;
 
+import com.google.common.base.CaseFormat;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -20,9 +22,24 @@ public enum EnumBlock{
     ;
 
     public static final EnumBlock[] values = values();
+    private final Block block;
+    private final Item item;
+    private final String name;
 
-    EnumBlock(){
+    EnumBlock(Block block){
+        this.block = block;
+        this.item = new ItemBlock(block);
+        this.name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name());
+    }
 
+    EnumBlock(Block block, String name){
+        this(block, new ItemBlock(block), name);
+    }
+
+    EnumBlock(Block block, Item item, String name){
+        this.block = block;
+        this.item = item;
+        this.name = name;
     }
 
     @SuppressWarnings("unchecked")
