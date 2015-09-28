@@ -60,7 +60,9 @@ public enum EnumBlock{
     }
 
     public static void registerBlocks(){
-
+        for(EnumBlock value : values){
+            registerBlock(value.block, value.item, value.name);
+        }
     }
 
     @SideOnly(Side.CLIENT)
