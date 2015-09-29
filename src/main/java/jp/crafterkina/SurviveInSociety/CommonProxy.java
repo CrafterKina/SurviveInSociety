@@ -7,6 +7,7 @@ package jp.crafterkina.SurviveInSociety;
 
 import jp.crafterkina.KinaCore.misclib.base.fle.AbstractFMLStateEvent;
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
+import jp.crafterkina.SurviveInSociety.entity.EnumEntity;
 import jp.crafterkina.SurviveInSociety.event.EnumEventHandler;
 import jp.crafterkina.SurviveInSociety.guicontainer.EnumGuiContainer;
 import jp.crafterkina.SurviveInSociety.item.EnumItem;
@@ -20,6 +21,7 @@ public class CommonProxy extends AbstractFMLStateEvent{
         EnumEventHandler.register();
         EnumItem.registerItems();
         EnumBlock.registerBlocks();
+        EnumEntity.registerEntity();
         EnumGuiContainer.register();
     }
 }
