@@ -5,14 +5,21 @@
 
 package jp.crafterkina.SurviveInSociety.entity;
 
+import com.google.common.base.CaseFormat;
+import jp.crafterkina.SurviveInSociety.SurviveInSociety;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public enum EnumEntity{
     ;
+
+    public static final EnumEntity[] values = values();
+
     private final Class<? extends Entity> entityClass;
+    private final String name;
     private final int trackingRange;
     private final int updateFrequency;
     private final boolean sendsVelocityUpdates;
@@ -26,6 +33,7 @@ public enum EnumEntity{
 
     EnumEntity(Builder builder){
         entityClass = builder.entityClass;
+        name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, name());
         trackingRange = builder.trackingRange;
         updateFrequency = builder.updateFrequency;
         sendsVelocityUpdates = builder.sendsVelocityUpdates;
@@ -36,6 +44,15 @@ public enum EnumEntity{
         groupMax = builder.groupMax;
         typeOfCreature = builder.typeOfCreature;
         spawnBiomes = builder.spawnBiomes;
+    }
+
+    public static void registerEntity(){
+        for(EnumEntity value : values){
+            EntityRegistry.registerModEntity(value.entityClass, value.name, value.ordinal(), SurviveInSociety.getInstance(), value.trackingRange, value.updateFrequency, value.sendsVelocityUpdates);
+            if(value.isLiving){
+                EntityRegistry.addSpawn(value.name, value.weightedProb, value.groupMin, value.groupMax, value.typeOfCreature, value.spawnBiomes);
+            }
+        }
     }
 
     class Builder{
