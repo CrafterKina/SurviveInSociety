@@ -66,19 +66,19 @@ public enum EnumEntity{
 
     class Builder{
         private Class<? extends Entity> entityClass;
-        private int trackingRange;
-        private int updateFrequency;
-        private boolean sendsVelocityUpdates;
+        private int trackingRange = 250;
+        private int updateFrequency = 1;
+        private boolean sendsVelocityUpdates = false;
         private Render render;
-        private boolean isLiving;
-        private int weightedProb;
-        private int groupMin;
-        private int groupMax;
-        private EnumCreatureType typeOfCreature;
-        private BiomeGenBase[] spawnBiomes;
-        private boolean enableEgg;
-        private int primaryColor;
-        private int secondaryColor;
+        private boolean isLiving = false;
+        private int weightedProb = 20;
+        private int groupMin = 1;
+        private int groupMax = 4;
+        private EnumCreatureType typeOfCreature = EnumCreatureType.CREATURE;
+        private BiomeGenBase[] spawnBiomes = new BiomeGenBase[]{BiomeGenBase.plains};
+        private boolean enableEgg = false;
+        private int primaryColor = 0xffffff;
+        private int secondaryColor = 0xffffff;
 
         public Builder setEntityClass(Class<? extends Entity> entityClass){
             this.entityClass = entityClass;
