@@ -80,60 +80,66 @@ public enum EnumEntity{
         private int primaryColor;
         private int secondaryColor;
 
-        public void setEntityClass(Class<? extends Entity> entityClass){
+        public Builder setEntityClass(Class<? extends Entity> entityClass){
             this.entityClass = entityClass;
+            return this;
         }
 
-        public void setTrackingRange(int trackingRange){
+        public Builder setTrackingRange(int trackingRange){
             this.trackingRange = trackingRange;
+            return this;
         }
 
-        public void setUpdateFrequency(int updateFrequency){
+        public Builder setUpdateFrequency(int updateFrequency){
             this.updateFrequency = updateFrequency;
+            return this;
         }
 
-        public void setSendsVelocityUpdates(boolean sendsVelocityUpdates){
+        public Builder setSendsVelocityUpdates(boolean sendsVelocityUpdates){
             this.sendsVelocityUpdates = sendsVelocityUpdates;
+            return this;
         }
 
-        public void setRender(Render render){
+        public Builder setRender(Render render){
             this.render = render;
+            return this;
         }
 
-        public void setIsLiving(boolean isLiving){
+        public Builder setIsLiving(boolean isLiving){
             this.isLiving = isLiving;
+            return this;
         }
 
-        public void setWeightedProb(int weightedProb){
+        public Builder setWeightedProb(int weightedProb){
             this.weightedProb = weightedProb;
+            return this;
         }
 
-        public void setGroupMin(int groupMin){
+        public Builder setGroupMin(int groupMin){
             this.groupMin = groupMin;
+            return this;
         }
 
-        public void setGroupMax(int groupMax){
+        public Builder setGroupMax(int groupMax){
             this.groupMax = groupMax;
+            return this;
         }
 
-        public void setTypeOfCreature(EnumCreatureType typeOfCreature){
+        public Builder setTypeOfCreature(EnumCreatureType typeOfCreature){
             this.typeOfCreature = typeOfCreature;
+            return this;
         }
 
-        public void setSpawnBiomes(BiomeGenBase[] spawnBiomes){
+        public Builder setSpawnBiomes(BiomeGenBase... spawnBiomes){
             this.spawnBiomes = spawnBiomes;
+            return this;
         }
 
-        public boolean isEnableEgg(){
-            return enableEgg;
-        }
-
-        public int getPrimaryColor(){
-            return primaryColor;
-        }
-
-        public int getSecondaryColor(){
-            return secondaryColor;
+        public Builder setColor(int primaryColor, int secondaryColor){
+            this.enableEgg = true;
+            this.primaryColor = primaryColor;
+            this.secondaryColor = secondaryColor;
+            return this;
         }
     }
 }
