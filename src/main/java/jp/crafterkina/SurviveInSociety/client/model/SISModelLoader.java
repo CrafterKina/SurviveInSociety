@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.client.model;
 
+import com.google.common.collect.Maps;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
@@ -12,9 +13,12 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 
 import java.io.IOException;
+import java.util.Map;
 
 public enum SISModelLoader implements ICustomModelLoader{
-    TEST{
+    Common{
+        private Map<String,IModel> modelMap = Maps.newHashMap();
+
         @Override
         public void onResourceManagerReload(IResourceManager resourceManager){
 
@@ -22,12 +26,19 @@ public enum SISModelLoader implements ICustomModelLoader{
 
         @Override
         public boolean accepts(ResourceLocation modelLocation){
-            return false;
+            return modelMap.containsKey(modelLocation.toString());
         }
 
         @Override
         public IModel loadModel(ResourceLocation modelLocation) throws IOException{
-            return null;
+            return modelMap.get(modelLocation.toString());
+        }
+
+        public void registerModel(ResourceLocation location, IModel model){
+            String path = location.getResourcePath();
+            path = (path.startsWith("builtin/") || path.startsWith("models/") ? "" : "models/") + path;
+            location = new ResourceLocation(location.getResourceDomain(), path);
+            modelMap.put(location.toString(), model);
         }
     };
 
