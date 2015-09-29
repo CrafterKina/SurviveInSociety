@@ -30,6 +30,9 @@ public enum EnumEntity{
     private final int groupMax;
     private final EnumCreatureType typeOfCreature;
     private final BiomeGenBase[] spawnBiomes;
+    private final boolean enableEgg;
+    private final int primaryColor;
+    private final int secondaryColor;
 
     EnumEntity(Builder builder){
         entityClass = builder.entityClass;
@@ -44,6 +47,9 @@ public enum EnumEntity{
         groupMax = builder.groupMax;
         typeOfCreature = builder.typeOfCreature;
         spawnBiomes = builder.spawnBiomes;
+        enableEgg = builder.enableEgg;
+        primaryColor = builder.primaryColor;
+        secondaryColor = builder.secondaryColor;
     }
 
     public static void registerEntity(){
@@ -51,6 +57,9 @@ public enum EnumEntity{
             EntityRegistry.registerModEntity(value.entityClass, value.name, value.ordinal(), SurviveInSociety.getInstance(), value.trackingRange, value.updateFrequency, value.sendsVelocityUpdates);
             if(value.isLiving){
                 EntityRegistry.addSpawn(value.name, value.weightedProb, value.groupMin, value.groupMax, value.typeOfCreature, value.spawnBiomes);
+            }
+            if(value.enableEgg){
+                EntityRegistry.registerEgg(value.entityClass, value.primaryColor, value.secondaryColor);
             }
         }
     }
@@ -67,6 +76,9 @@ public enum EnumEntity{
         private int groupMax;
         private EnumCreatureType typeOfCreature;
         private BiomeGenBase[] spawnBiomes;
+        private boolean enableEgg;
+        private int primaryColor;
+        private int secondaryColor;
 
         public void setEntityClass(Class<? extends Entity> entityClass){
             this.entityClass = entityClass;
@@ -110,6 +122,18 @@ public enum EnumEntity{
 
         public void setSpawnBiomes(BiomeGenBase[] spawnBiomes){
             this.spawnBiomes = spawnBiomes;
+        }
+
+        public boolean isEnableEgg(){
+            return enableEgg;
+        }
+
+        public int getPrimaryColor(){
+            return primaryColor;
+        }
+
+        public int getSecondaryColor(){
+            return secondaryColor;
         }
     }
 }
