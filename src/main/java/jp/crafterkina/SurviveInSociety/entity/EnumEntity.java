@@ -7,6 +7,8 @@ package jp.crafterkina.SurviveInSociety.entity;
 
 import com.google.common.base.CaseFormat;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
+import jp.crafterkina.SurviveInSociety.client.entity.render.RenderReceptionist;
+import jp.crafterkina.SurviveInSociety.entity.entities.EntityReceptionist;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -15,6 +17,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public enum EnumEntity{
+    Receptionist(new Builder().setEntityClass(EntityReceptionist.class).setRender(new RenderReceptionist())),
     ;
 
     public static final EnumEntity[] values = values();
@@ -71,7 +74,7 @@ public enum EnumEntity{
         }
     }
 
-    class Builder{
+    private static class Builder{
         private Class<? extends Entity> entityClass;
         private int trackingRange = 250;
         private int updateFrequency = 1;
