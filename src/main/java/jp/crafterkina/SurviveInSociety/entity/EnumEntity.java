@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public enum EnumEntity{
@@ -61,6 +62,12 @@ public enum EnumEntity{
             if(value.enableEgg){
                 EntityRegistry.registerEgg(value.entityClass, value.primaryColor, value.secondaryColor);
             }
+        }
+    }
+
+    public static void registerRender(){
+        for(EnumEntity value : values){
+            RenderingRegistry.registerEntityRenderingHandler(value.entityClass, value.render);
         }
     }
 
