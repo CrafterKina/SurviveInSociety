@@ -87,6 +87,11 @@ public enum EnumEntity{
         private int primaryColor = 0xffffff;
         private int secondaryColor = 0xffffff;
 
+        private Builder(Class<? extends Entity> entityClass, Render render){
+            this.entityClass = entityClass;
+            this.render = render;
+        }
+
         public Builder setEntityClass(Class<? extends Entity> entityClass){
             this.entityClass = entityClass;
             return this;
