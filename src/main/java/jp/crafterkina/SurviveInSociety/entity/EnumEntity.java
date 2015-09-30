@@ -17,7 +17,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public enum EnumEntity{
-    Receptionist(new Builder().setEntityClass(EntityReceptionist.class).setRender(new RenderReceptionist())),
+    Receptionist(new Builder(EntityReceptionist.class, new RenderReceptionist())),
     ;
 
     public static final EnumEntity[] values = values();
