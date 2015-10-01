@@ -9,7 +9,7 @@ import jp.crafterkina.SurviveInSociety.client.eventhandler.ClientEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.CommonEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.FMLEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.OreGenEventHandler;
-import jp.crafterkina.SurviveInSociety.event.handler.TerrainGenEventHandler;
+import jp.crafterkina.SurviveInSociety.world.TerrainGenEventHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 
