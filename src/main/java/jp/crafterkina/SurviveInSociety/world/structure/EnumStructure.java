@@ -5,4 +5,17 @@
 
 package jp.crafterkina.SurviveInSociety.world.structure;
 
-public class EnumStructure{}
+import net.minecraft.world.gen.structure.StructureComponent;
+import net.minecraft.world.gen.structure.StructureStart;
+
+public enum EnumStructure{
+    ;
+
+    private final StructureStart start;
+    private final StructureComponent[] components;
+
+    EnumStructure(StructureStart start, StructureComponent... components){
+        this.start = start;
+        this.components = components;
+    }
+}
