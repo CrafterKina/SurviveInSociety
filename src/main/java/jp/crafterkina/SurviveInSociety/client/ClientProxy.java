@@ -8,6 +8,7 @@ package jp.crafterkina.SurviveInSociety.client;
 import jp.crafterkina.KinaCore.misclib.base.fle.AbstractFMLStateEvent;
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
 import jp.crafterkina.SurviveInSociety.client.model.SISModelLoader;
+import jp.crafterkina.SurviveInSociety.entity.EnumEntity;
 import jp.crafterkina.SurviveInSociety.item.EnumItem;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -16,6 +17,7 @@ public class ClientProxy extends AbstractFMLStateEvent{
     public void preInit(FMLPreInitializationEvent event){
         EnumBlock.registerModels();
         EnumItem.registerModels();
+        EnumEntity.registerRender();
         SISModelLoader.register();
     }
 }
