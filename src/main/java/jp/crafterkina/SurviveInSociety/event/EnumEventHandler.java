@@ -9,7 +9,6 @@ import jp.crafterkina.SurviveInSociety.client.eventhandler.ClientEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.CommonEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.FMLEventHandler;
 import jp.crafterkina.SurviveInSociety.event.handler.TerrainGenEventHandler;
-import jp.crafterkina.SurviveInSociety.world.ore.OreGenEventHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 
@@ -18,7 +17,7 @@ import static net.minecraftforge.common.MinecraftForge.*;
 public enum EnumEventHandler{
     Common(CommonEventHandler.instance, EVENT_BUS),
     TerrainGen(TerrainGenEventHandler.instance, TERRAIN_GEN_BUS),
-    OreGen(OreGenEventHandler.instance, ORE_GEN_BUS),
+    //OreGen(OreGenEventHandler.instance, ORE_GEN_BUS),
     FML(FMLEventHandler.instance, FMLCommonHandler.instance().bus()),
     Client(ClientEventHandler.instance, EVENT_BUS);
 
