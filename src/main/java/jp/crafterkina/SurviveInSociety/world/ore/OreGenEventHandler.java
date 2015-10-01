@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package jp.crafterkina.SurviveInSociety.event.handler;
+package jp.crafterkina.SurviveInSociety.world.ore;
 
 public enum OreGenEventHandler{
     instance
