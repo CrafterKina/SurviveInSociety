@@ -17,13 +17,13 @@ import java.util.Random;
 public class TroubleCenterComponent extends StructureVillagePieces.Village{
     public TroubleCenterComponent(){}
 
-    public TroubleCenterComponent(StructureVillagePieces.Start p_i45571_1_, int p_i45571_2_, Random p_i45571_3_, StructureBoundingBox p_i45571_4_, EnumFacing p_i45571_5_){
+    public TroubleCenterComponent(StructureVillagePieces.Start start, int componentType, Random random, StructureBoundingBox boundingBox, EnumFacing facing){
 
     }
 
-    protected static TroubleCenterComponent build(StructureVillagePieces.Start startPiece, List pieces, Random random, int p1, int p2, int p3, EnumFacing facing, int p5){
-        StructureBoundingBox box = StructureBoundingBox.func_175897_a(p1, p2, p3, 0, 0, 0, 10, 6, 7, facing);
-        return canVillageGoDeeper(box) && StructureComponent.findIntersecting(pieces, box) == null ? new TroubleCenterComponent(startPiece, p5, random, box, facing) : null;
+    protected static TroubleCenterComponent build(StructureVillagePieces.Start startPiece, List pieces, Random random, int x, int y, int z, EnumFacing facing, int componentType){
+        StructureBoundingBox box = StructureBoundingBox.func_175897_a(x, y, z, 0, 0, 0, 10, 6, 7, facing);
+        return canVillageGoDeeper(box) && StructureComponent.findIntersecting(pieces, box) == null ? new TroubleCenterComponent(startPiece, componentType, random, box, facing) : null;
     }
 
     @Override
