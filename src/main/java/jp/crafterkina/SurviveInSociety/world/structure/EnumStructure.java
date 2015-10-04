@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.world.structure;
 
+import jp.crafterkina.SurviveInSociety.SurviveInSociety;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -32,10 +33,10 @@ public enum EnumStructure{
     public static void register(){
         for(EnumStructure value : values){
             if(value.onRegister()){
-                MapGenStructureIO.registerStructure(value.start, value.name());
+                MapGenStructureIO.registerStructure(value.start, SurviveInSociety.PARENT_PACKAGE + value.name());
                 int i = 1;
                 for(Class<? extends StructureComponent> component : value.components){
-                    MapGenStructureIO.registerStructureComponent(component, value.name() + i++);
+                    MapGenStructureIO.registerStructureComponent(component, SurviveInSociety.PARENT_PACKAGE + value.name() + i++);
                 }
             }
         }
