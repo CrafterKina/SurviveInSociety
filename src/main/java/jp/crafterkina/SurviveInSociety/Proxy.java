@@ -29,7 +29,12 @@ public enum Proxy{
             EnumVillageStructure.register();
         }
     },
-    Server,
+    Server{
+        @Override
+        public boolean accept(Side side){
+            return side.isServer();
+        }
+    },
     Client{
         @Override
         public void preInit(FMLPreInitializationEvent event){
@@ -37,6 +42,11 @@ public enum Proxy{
             EnumItem.registerModels();
             EnumEntity.registerRender();
             SISModelLoader.register();
+        }
+
+        @Override
+        public boolean accept(Side side){
+            return side.isClient();
         }
     };
     public static final Proxy[] values = values();
