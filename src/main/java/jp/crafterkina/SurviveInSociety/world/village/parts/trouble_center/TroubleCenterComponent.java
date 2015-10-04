@@ -17,8 +17,10 @@ import java.util.Random;
 public class TroubleCenterComponent extends StructureVillagePieces.Village{
     public TroubleCenterComponent(){}
 
-    public TroubleCenterComponent(StructureVillagePieces.Start start, int componentType, Random random, StructureBoundingBox boundingBox, EnumFacing facing){
-
+    public TroubleCenterComponent(StructureVillagePieces.Start start, int componentType, Random random, StructureBoundingBox box, EnumFacing facing){
+        super(start, componentType);
+        coordBaseMode = facing;
+        boundingBox = box;
     }
 
     protected static TroubleCenterComponent build(StructureVillagePieces.Start startPiece, List pieces, Random random, int x, int y, int z, EnumFacing facing, int componentType){
