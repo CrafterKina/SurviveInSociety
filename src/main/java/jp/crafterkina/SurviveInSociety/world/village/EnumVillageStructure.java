@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public enum EnumVillageStructure{
     ;
+    public static final EnumVillageStructure[] values = values();
 
     private final VillagerRegistry.IVillageCreationHandler handler;
 
@@ -17,7 +18,7 @@ public enum EnumVillageStructure{
     }
 
     public static void register(){
-        for(EnumVillageStructure value : values()){
+        for(EnumVillageStructure value : values){
             VillagerRegistry.instance().registerVillageCreationHandler(value.handler);
         }
     }
