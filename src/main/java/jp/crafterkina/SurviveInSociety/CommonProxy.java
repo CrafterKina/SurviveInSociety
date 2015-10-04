@@ -12,6 +12,7 @@ import jp.crafterkina.SurviveInSociety.event.EnumEventHandler;
 import jp.crafterkina.SurviveInSociety.guicontainer.EnumGuiContainer;
 import jp.crafterkina.SurviveInSociety.item.EnumItem;
 import jp.crafterkina.SurviveInSociety.world.structure.EnumStructure;
+import jp.crafterkina.SurviveInSociety.world.village.EnumVillageStructure;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -25,5 +26,6 @@ public class CommonProxy extends AbstractFMLStateEvent{
         EnumEntity.registerEntity();
         EnumGuiContainer.register();
         EnumStructure.register();
+        EnumVillageStructure.register();
     }
 }
