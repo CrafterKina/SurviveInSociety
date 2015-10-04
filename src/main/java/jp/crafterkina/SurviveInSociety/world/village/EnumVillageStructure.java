@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.world.village;
 
+import jp.crafterkina.SurviveInSociety.SurviveInSociety;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
@@ -23,7 +24,7 @@ public enum EnumVillageStructure{
 
     public static void register(){
         for(EnumVillageStructure value : values){
-            MapGenStructureIO.registerStructureComponent(value.component, value.name());
+            MapGenStructureIO.registerStructureComponent(value.component, SurviveInSociety.PARENT_PACKAGE + value.name());
             VillagerRegistry.instance().registerVillageCreationHandler(value.handler);
         }
     }
