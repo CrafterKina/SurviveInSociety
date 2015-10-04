@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.world.village.parts.trouble_center;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -30,6 +31,15 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village{
 
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn){
-        return false;
+        if(this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn)){
+            return false;
+        }
+        func_175804_a(worldIn, structureBoundingBoxIn, 0, 0, 0, 4, 10, 4, Blocks.planks.getDefaultState(), Blocks.planks.getDefaultState(), false);
+
+        fillWithAir(worldIn, structureBoundingBoxIn, 1, 1, 1, 3, 9, 3);
+
+        placeDoorCurrentPosition(worldIn, boundingBox, randomIn, 0, 1, 2, coordBaseMode);
+
+        return true;
     }
 }
