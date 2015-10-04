@@ -6,6 +6,7 @@
 package jp.crafterkina.SurviveInSociety.world.village.parts.trouble_center;
 
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
@@ -16,7 +17,7 @@ import java.util.Random;
 public class TroubleCenterCreationHandler implements IVillageCreationHandler{
     @Override
     public PieceWeight getVillagePieceWeight(Random random, int i){
-        return new PieceWeight(TroubleCenterComponent.class, 20, 10);
+        return new PieceWeight(TroubleCenterComponent.class, 20, MathHelper.getRandomIntegerInRange(random, i, i + 1));
     }
 
     @Override
