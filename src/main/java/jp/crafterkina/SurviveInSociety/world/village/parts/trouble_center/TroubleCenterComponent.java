@@ -31,14 +31,21 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village{
 
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn){
-        if(this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn)){
-            return false;
+        if(this.field_143015_k < 0){
+            this.field_143015_k = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
+
+            if(this.field_143015_k < 0){
+                return true;
+            }
+
+            this.boundingBox.offset(0, this.field_143015_k - this.boundingBox.maxY + 6 - 1, 0);
         }
+
         func_175804_a(worldIn, structureBoundingBoxIn, 0, 0, 0, 4, 10, 4, Blocks.planks.getDefaultState(), Blocks.planks.getDefaultState(), false);
 
         fillWithAir(worldIn, structureBoundingBoxIn, 1, 1, 1, 3, 9, 3);
 
-        placeDoorCurrentPosition(worldIn, boundingBox, randomIn, 0, 1, 2, coordBaseMode);
+        placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, coordBaseMode);
 
         return true;
     }
