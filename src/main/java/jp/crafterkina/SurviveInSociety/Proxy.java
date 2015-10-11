@@ -15,6 +15,7 @@ import jp.crafterkina.SurviveInSociety.world.structure.EnumStructure;
 import jp.crafterkina.SurviveInSociety.world.village.EnumVillageStructure;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public enum Proxy{
     Common{
@@ -29,12 +30,14 @@ public enum Proxy{
             EnumVillageStructure.register();
         }
     },
+    @SideOnly(Side.SERVER)
     Server{
         @Override
         public boolean accept(Side side){
             return side.isServer();
         }
     },
+    @SideOnly(Side.CLIENT)
     Client{
         @Override
         public void preInit(FMLPreInitializationEvent event){
