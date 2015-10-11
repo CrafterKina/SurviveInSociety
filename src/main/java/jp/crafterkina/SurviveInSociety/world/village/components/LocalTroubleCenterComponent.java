@@ -6,6 +6,7 @@
 package jp.crafterkina.SurviveInSociety.world.village.components;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -27,6 +28,18 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         coordBaseMode = facing;
         boundingBox = box;
         type = Type.values()[random.nextInt(Type.values().length)];
+    }
+
+    @Override
+    protected void writeStructureToNBT(NBTTagCompound tagCompound){
+        super.writeStructureToNBT(tagCompound);
+        tagCompound.setInteger("LTCType", type.ordinal());
+    }
+
+    @Override
+    protected void readStructureFromNBT(NBTTagCompound tagCompound){
+        super.readStructureFromNBT(tagCompound);
+        type = Type.values()[tagCompound.getInteger("LTCType")];
     }
 
     @Override
