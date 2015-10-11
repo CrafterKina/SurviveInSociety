@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import java.util.List;
 import java.util.Random;
 
-public class TroubleCenterComponent extends StructureVillagePieces.Village implements VillagerRegistry.IVillageCreationHandler{
+public class LocalTroubleCenterComponent extends StructureVillagePieces.Village implements VillagerRegistry.IVillageCreationHandler{
     private Type type;
 
-    public TroubleCenterComponent(){}
+    public LocalTroubleCenterComponent(){}
 
-    public TroubleCenterComponent(StructureVillagePieces.Start start, int componentType, Random random, StructureBoundingBox box, EnumFacing facing){
+    public LocalTroubleCenterComponent(StructureVillagePieces.Start start, int componentType, Random random, StructureBoundingBox box, EnumFacing facing){
         super(start, componentType);
         coordBaseMode = facing;
         boundingBox = box;
@@ -31,18 +31,18 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village imple
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
-        return new StructureVillagePieces.PieceWeight(TroubleCenterComponent.class, 20, MathHelper.getRandomIntegerInRange(random, i, i + 1));
+        return new StructureVillagePieces.PieceWeight(LocalTroubleCenterComponent.class, 20, MathHelper.getRandomIntegerInRange(random, i, i + 1));
     }
 
     @Override
     public Class<?> getComponentClass(){
-        return TroubleCenterComponent.class;
+        return LocalTroubleCenterComponent.class;
     }
 
     @Override
     public Object buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List pieces, Random random, int x, int y, int z, EnumFacing facing, int p5){
         StructureBoundingBox box = StructureBoundingBox.func_175897_a(x, y, z, 0, 0, 0, 10, 6, 7, facing);
-        return canVillageGoDeeper(box) && StructureComponent.findIntersecting(pieces, box) == null ? new TroubleCenterComponent(startPiece, componentType, random, box, facing) : null;
+        return canVillageGoDeeper(box) && StructureComponent.findIntersecting(pieces, box) == null ? new LocalTroubleCenterComponent(startPiece, componentType, random, box, facing) : null;
     }
 
     @Override
@@ -67,6 +67,6 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village imple
     }
 
     enum Type{
-        Local,;
+        Tiny,;
     }
 }

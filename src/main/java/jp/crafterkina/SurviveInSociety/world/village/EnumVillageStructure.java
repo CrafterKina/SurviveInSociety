@@ -6,13 +6,13 @@
 package jp.crafterkina.SurviveInSociety.world.village;
 
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
-import jp.crafterkina.SurviveInSociety.world.village.components.TroubleCenterComponent;
+import jp.crafterkina.SurviveInSociety.world.village.components.LocalTroubleCenterComponent;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public enum EnumVillageStructure{
-    TroubleCenter(new TroubleCenterComponent()),
+    TroubleCenter(new LocalTroubleCenterComponent()),
     ;
     public static final EnumVillageStructure[] values = values();
 
