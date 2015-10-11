@@ -5,7 +5,6 @@
 
 package jp.crafterkina.SurviveInSociety.world.village.components;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
@@ -69,14 +68,16 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
 
             this.boundingBox.offset(0, this.field_143015_k - this.boundingBox.maxY + 6 - 1, 0);
         }
+        switch(type){
+            case Tiny:
+                return addTinyParts(worldIn, randomIn, structureBoundingBoxIn);
+            default:
+                return false;
+        }
+    }
 
-        func_175804_a(worldIn, structureBoundingBoxIn, 0, 0, 0, 4, 10, 4, Blocks.planks.getDefaultState(), Blocks.planks.getDefaultState(), false);
-
-        fillWithAir(worldIn, structureBoundingBoxIn, 1, 1, 1, 3, 9, 3);
-
-        placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, coordBaseMode);
-
-        return true;
+    private boolean addTinyParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn){
+        return false;
     }
 
     private enum Type{
