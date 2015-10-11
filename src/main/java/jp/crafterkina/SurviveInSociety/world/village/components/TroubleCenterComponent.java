@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TroubleCenterComponent extends StructureVillagePieces.Village implements VillagerRegistry.IVillageCreationHandler{
+    private Type type;
 
     public TroubleCenterComponent(){}
 
@@ -25,6 +26,7 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village imple
         super(start, componentType);
         coordBaseMode = facing;
         boundingBox = box;
+        type = Type.values()[random.nextInt(Type.values().length)];
     }
 
     @Override
@@ -62,5 +64,9 @@ public class TroubleCenterComponent extends StructureVillagePieces.Village imple
         placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, coordBaseMode);
 
         return true;
+    }
+
+    enum Type{
+        Local,;
     }
 }
