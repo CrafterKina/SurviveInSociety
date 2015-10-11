@@ -27,7 +27,7 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         super(start, componentType);
         coordBaseMode = facing;
         boundingBox = box;
-        type = Type.values()[random.nextInt(Type.values().length)];
+        type = Type.values[random.nextInt(Type.values.length)];
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
     @Override
     protected void readStructureFromNBT(NBTTagCompound tagCompound){
         super.readStructureFromNBT(tagCompound);
-        type = Type.values()[tagCompound.getInteger("LTCType")];
+        type = Type.values[tagCompound.getInteger("LTCType")];
     }
 
     @Override
@@ -79,7 +79,8 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         return true;
     }
 
-    enum Type{
+    private enum Type{
         Tiny,;
+        private static final Type[] values = values();
     }
 }
