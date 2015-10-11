@@ -47,7 +47,7 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
     }
 
     @Override
-    public Class<?> getComponentClass(){
+    public Class<LocalTroubleCenterComponent> getComponentClass(){
         return LocalTroubleCenterComponent.class;
     }
 
