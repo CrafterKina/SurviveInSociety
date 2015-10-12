@@ -7,6 +7,7 @@ package jp.crafterkina.SurviveInSociety.block;
 
 import com.google.common.base.CaseFormat;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
+import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -25,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public enum EnumBlock{
+    BulletinBoard(new BlockBulletinBoard(), null, "bulletin_board"),
     ;
 
     public static final EnumBlock[] values = values();
