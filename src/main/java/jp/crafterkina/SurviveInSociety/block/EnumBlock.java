@@ -28,6 +28,8 @@ public enum EnumBlock{
     ;
 
     public static final EnumBlock[] values = values();
+    private static final Method main = ReflectionHelper.findMethod(GameData.class, null, new String[]{"getMain"});
+    private static final Method register = ReflectionHelper.findMethod(GameData.class, null, new String[]{"registerBlock"}, Block.class, String.class);
     private final Block block;
     private final Item item;
     private final String name;
@@ -41,7 +43,6 @@ public enum EnumBlock{
     EnumBlock(Block block, String name){
         this(block, new ItemBlock(block), name);
     }
-
     EnumBlock(Block block, Item item, String name){
         this.block = block;
         this.item = item;
@@ -50,10 +51,8 @@ public enum EnumBlock{
 
     @SuppressWarnings("unchecked")
     public static void registerBlock(Block block, Item item, String name){
-        Method main = ReflectionHelper.findMethod(GameData.class, null, new String[]{"getMain"});
-        Method register = ReflectionHelper.findMethod(GameData.class, null, new String[]{"registerBlock"}, Block.class, String.class);
         try{
-            register.invoke(main, block, name);
+            register.invoke(main.invoke(null), block, name);
             if(item != null){
                 GameRegistry.registerItem(item, name);
                 GameData.getBlockItemMap().put(block, item);
