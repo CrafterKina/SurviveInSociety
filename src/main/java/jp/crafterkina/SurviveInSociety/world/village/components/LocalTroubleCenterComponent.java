@@ -115,6 +115,17 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 3, 3, 0, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 3, 2, 0, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 3, 1, 0, structureBoundingBoxIn);
+        int i = this.getMetadataWithOffset(Blocks.oak_stairs, 3);
+        int j = this.getMetadataWithOffset(Blocks.oak_stairs, 2);
+        int k;
+        int l;
+
+        for(k = -1; k <= 2; ++k){
+            for(l = 0; l <= 5; ++l){
+                this.setBlockState(worldIn, Blocks.oak_stairs.getStateFromMeta(i), l, 5 + k, k, structureBoundingBoxIn);
+                this.setBlockState(worldIn, Blocks.oak_stairs.getStateFromMeta(j), l, 5 + k, 5 - k, structureBoundingBoxIn);
+            }
+        }
 
         if(this.getBlockStateFromPos(worldIn, 2, 0, -1, structureBoundingBoxIn).getBlock().getMaterial() == Material.air && this.getBlockStateFromPos(worldIn, 2, -1, -1, structureBoundingBoxIn).getBlock().getMaterial() != Material.air){
             this.setBlockState(worldIn, Blocks.stone_stairs.getStateFromMeta(this.getMetadataWithOffset(Blocks.stone_stairs, 3)), 2, 0, -1, structureBoundingBoxIn);
@@ -124,8 +135,8 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
 
         this.setBlockState(worldIn, Blocks.torch.getDefaultState().withProperty(BlockTorch.FACING, this.coordBaseMode), 2, 3, 1, structureBoundingBoxIn);
 
-        for(int i = 0; i < 5; ++i){
-            for(int j = 0; j < 5; ++j){
+        for(i = 0; i < 5; ++i){
+            for(j = 0; j < 5; ++j){
                 this.clearCurrentPositionBlocksUpwards(worldIn, j, 6, i, structureBoundingBoxIn);
                 this.replaceAirAndLiquidDownwards(worldIn, Blocks.cobblestone.getDefaultState(), j, -1, i, structureBoundingBoxIn);
             }
