@@ -6,11 +6,13 @@
 package jp.crafterkina.SurviveInSociety.world.village;
 
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
+import jp.crafterkina.SurviveInSociety.world.village.components.LocalTroubleCenterComponent;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public enum EnumVillageStructure{
+    TroubleCenter(new LocalTroubleCenterComponent()),
     ;
     public static final EnumVillageStructure[] values = values();
 
@@ -20,6 +22,11 @@ public enum EnumVillageStructure{
     EnumVillageStructure(VillagerRegistry.IVillageCreationHandler handler, Class<? extends StructureVillagePieces.Village> component){
         this.handler = handler;
         this.component = component;
+    }
+
+    @SuppressWarnings("unchecked")
+    EnumVillageStructure(VillagerRegistry.IVillageCreationHandler handler){
+        this(handler, (Class<? extends StructureVillagePieces.Village>) handler.getComponentClass());
     }
 
     public static void register(){
