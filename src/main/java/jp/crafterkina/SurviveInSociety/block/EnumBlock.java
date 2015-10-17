@@ -43,6 +43,7 @@ public enum EnumBlock{
     EnumBlock(Block block, String name){
         this(block, new ItemBlock(block), name);
     }
+
     EnumBlock(Block block, Item item, String name){
         this.block = block;
         this.item = item;
@@ -85,5 +86,17 @@ public enum EnumBlock{
                 return new ModelResourceLocation(new ResourceLocation(SurviveInSociety.PARENT_PACKAGE, name), "inventory");
             }
         };
+    }
+
+    public Block getBlock(){
+        return block;
+    }
+
+    public Item getItem(){
+        return item;
+    }
+
+    public String getName(){
+        return name;
     }
 }
