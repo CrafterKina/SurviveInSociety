@@ -43,10 +43,17 @@ public enum EnumBlock{
     EnumBlock(Block block, String name){
         this(block, new ItemBlock(block), name);
     }
+
     EnumBlock(Block block, Item item, String name){
         this.block = block;
         this.item = item;
         this.name = name;
+    }
+
+    EnumBlock(Builder builder){
+        block = builder.block;
+        item = builder.item;
+        name = builder.name != null ? builder.name : CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name());
     }
 
     @SuppressWarnings("unchecked")
@@ -85,5 +92,38 @@ public enum EnumBlock{
                 return new ModelResourceLocation(new ResourceLocation(SurviveInSociety.PARENT_PACKAGE, name), "inventory");
             }
         };
+    }
+
+    public Block getBlock(){
+        return block;
+    }
+
+    public Item getItem(){
+        return item;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    private class Builder{
+        private Block block;
+        private Item item;
+        private String name = null;
+
+        private Builder(Block block){
+            this.block = block;
+            this.item = new ItemBlock(block);
+        }
+
+        public Builder setItem(Item item){
+            this.item = item;
+            return this;
+        }
+
+        public Builder setName(String name){
+            this.name = name;
+            return this;
+        }
     }
 }
