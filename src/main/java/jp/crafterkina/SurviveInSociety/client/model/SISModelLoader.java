@@ -13,6 +13,10 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.Map;
 
 public enum SISModelLoader implements ICustomModelLoader{
@@ -46,5 +50,11 @@ public enum SISModelLoader implements ICustomModelLoader{
         for(SISModelLoader loader : values()){
             ModelLoaderRegistry.registerLoader(loader);
         }
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface HasCustomModelLoader{
+        String value();
     }
 }
