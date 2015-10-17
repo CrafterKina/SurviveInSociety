@@ -27,4 +27,12 @@ public class TileEntityBulletinBoard extends TileEntity{
         }
         compound.setTag("stack", itemCompound);
     }
+
+    public ItemStack updateContent(){
+        return stack;
+    }
+
+    public void setContent(ItemStack content){
+        stack = content;
+    }
 }
