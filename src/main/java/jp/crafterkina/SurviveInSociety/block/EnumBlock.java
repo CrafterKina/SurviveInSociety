@@ -50,6 +50,12 @@ public enum EnumBlock{
         this.name = name;
     }
 
+    EnumBlock(Builder builder){
+        block = builder.block;
+        item = builder.item;
+        name = builder.name != null ? builder.name : CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name());
+    }
+
     @SuppressWarnings("unchecked")
     public static void registerBlock(Block block, Item item, String name){
         try{
@@ -98,5 +104,26 @@ public enum EnumBlock{
 
     public String getName(){
         return name;
+    }
+
+    private class Builder{
+        private Block block;
+        private Item item;
+        private String name = null;
+
+        private Builder(Block block){
+            this.block = block;
+            this.item = new ItemBlock(block);
+        }
+
+        public Builder setItem(Item item){
+            this.item = item;
+            return this;
+        }
+
+        public Builder setName(String name){
+            this.name = name;
+            return this;
+        }
     }
 }
