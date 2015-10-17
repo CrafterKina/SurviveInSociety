@@ -15,6 +15,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public enum EnumItem{
+    Requisition,
     ;
 
     public static final EnumItem[] values = values();
@@ -47,5 +48,9 @@ public enum EnumItem{
             }
         };
         ModelLoader.setCustomMeshDefinition(item, definition);
+    }
+
+    public Item getItem(){
+        return item;
     }
 }

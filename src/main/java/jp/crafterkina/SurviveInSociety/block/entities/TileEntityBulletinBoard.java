@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.block.entities;
 
+import jp.crafterkina.SurviveInSociety.item.EnumItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -33,6 +34,11 @@ public class TileEntityBulletinBoard extends TileEntity{
     }
 
     public void setContent(ItemStack content){
+        if(!isValid(content)) return;
         stack = content;
+    }
+
+    public boolean isValid(ItemStack target){
+        return target != null && target.getItem() == EnumItem.Requisition.getItem();
     }
 }
