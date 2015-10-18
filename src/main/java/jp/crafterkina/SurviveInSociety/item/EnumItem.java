@@ -48,4 +48,8 @@ public enum EnumItem{
         };
         ModelLoader.setCustomMeshDefinition(item, definition);
     }
+
+    public Item getItem(){
+        return item;
+    }
 }
