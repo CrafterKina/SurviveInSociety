@@ -19,7 +19,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Map;
 
-public enum SISModelLoader implements ICustomModelLoader{
+public enum SISModelLoaderRegistrar implements ICustomModelLoader{
     Common{
         private Map<String,IModel> modelMap = Maps.newHashMap();
 
@@ -47,7 +47,7 @@ public enum SISModelLoader implements ICustomModelLoader{
     };
 
     public static void register(){
-        for(SISModelLoader loader : values()){
+        for(SISModelLoaderRegistrar loader : values()){
             ModelLoaderRegistry.registerLoader(loader);
         }
     }

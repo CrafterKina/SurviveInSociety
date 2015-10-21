@@ -6,7 +6,7 @@
 package jp.crafterkina.SurviveInSociety;
 
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
-import jp.crafterkina.SurviveInSociety.client.model.SISModelLoader;
+import jp.crafterkina.SurviveInSociety.client.model.SISModelLoaderRegistrar;
 import jp.crafterkina.SurviveInSociety.entity.EnumEntity;
 import jp.crafterkina.SurviveInSociety.event.EnumEventHandler;
 import jp.crafterkina.SurviveInSociety.guicontainer.EnumGuiContainer;
@@ -44,7 +44,7 @@ public enum Proxy{
             EnumBlock.registerModels();
             EnumItem.registerModels();
             EnumEntity.registerRender();
-            SISModelLoader.register();
+            SISModelLoaderRegistrar.register();
         }
 
         @Override
