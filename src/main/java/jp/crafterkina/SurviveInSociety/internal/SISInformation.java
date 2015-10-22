@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 public class SISInformation{
     private static Logger logger = null;
 
+    private SISInformation(){}
+
     public static Logger getLogger(){
         return logger;
     }
