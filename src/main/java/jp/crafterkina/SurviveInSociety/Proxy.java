@@ -10,6 +10,7 @@ import jp.crafterkina.SurviveInSociety.client.model.SISModelLoaderRegistrar;
 import jp.crafterkina.SurviveInSociety.entity.EnumEntity;
 import jp.crafterkina.SurviveInSociety.event.EnumEventHandler;
 import jp.crafterkina.SurviveInSociety.guicontainer.EnumGuiContainer;
+import jp.crafterkina.SurviveInSociety.internal.SISInformation;
 import jp.crafterkina.SurviveInSociety.item.EnumItem;
 import jp.crafterkina.SurviveInSociety.world.structure.EnumStructure;
 import jp.crafterkina.SurviveInSociety.world.village.EnumVillageStructure;
@@ -21,6 +22,7 @@ public enum Proxy{
     Common{
         @Override
         public void preInit(FMLPreInitializationEvent event){
+            SISInformation.setLogger(event.getModLog());
             EnumEventHandler.register();
             EnumItem.registerItems();
             EnumBlock.registerBlocks();
