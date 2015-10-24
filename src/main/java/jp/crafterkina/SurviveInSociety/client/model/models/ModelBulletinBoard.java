@@ -7,15 +7,20 @@ package jp.crafterkina.SurviveInSociety.client.model.models;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import jp.crafterkina.SurviveInSociety.block.EnumBlock;
+import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelRotation;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.vecmath.Vector3f;
@@ -61,7 +66,8 @@ public class ModelBulletinBoard implements IModel{
         private final Pair<Vector3f,Vector3f> rightFrameShape = Pair.of(new Vector3f(15, 0, 0), new Vector3f(16, 16, 2));
         private final BlockFaceUV[] verticalFrameUVs = new BlockFaceUV[]{new BlockFaceUV(new float[]{0, 0, 1, 2}, 0), new BlockFaceUV(new float[]{0, 0, 1, 2}, 0), new BlockFaceUV(new float[]{0, 0, 1, 16}, 0), new BlockFaceUV(new float[]{0, 0, 1, 16}, 0), new BlockFaceUV(new float[]{0, 0, 2, 16}, 0), new BlockFaceUV(new float[]{0, 0, 2, 16}, 0)};
         private final BlockFaceUV[] horizontalFrameUVs = new BlockFaceUV[]{new BlockFaceUV(new float[]{0, 0, 16, 2}, 0), new BlockFaceUV(new float[]{0, 0, 16, 2}, 0), new BlockFaceUV(new float[]{0, 0, 16, 1}, 0), new BlockFaceUV(new float[]{0, 0, 16, 1}, 0), new BlockFaceUV(new float[]{0, 0, 2, 1}, 0), new BlockFaceUV(new float[]{0, 0, 2, 1}, 0)};
-        private final ITransformation rotation = ModelRotation.X0_Y0;
+        private ITransformation rotation = ModelRotation.X0_Y0;
+        private BlockPos pos = BlockPos.ORIGIN;
 
         private Baked(TextureAtlasSprite base, TextureAtlasSprite frame){
             this.base = base;
@@ -81,10 +87,18 @@ public class ModelBulletinBoard implements IModel{
 
             for(EnumFacing facing : EnumFacing.values()){
                 if(facing == NORTH) continue;
-                quads.add(bakeFace(facing, frame, leftFrameShape, verticalFrameUVs[facing.getIndex()], -1));
-                quads.add(bakeFace(facing, frame, rightFrameShape, verticalFrameUVs[facing.getIndex()], -1));
-                quads.add(bakeFace(facing, frame, topFrameShape, horizontalFrameUVs[facing.getIndex()], -1));
-                quads.add(bakeFace(facing, frame, bottomFrameShape, horizontalFrameUVs[facing.getIndex()], -1));
+                if(!isBoard(WEST)){
+                    quads.add(bakeFace(facing, frame, leftFrameShape, verticalFrameUVs[facing.getIndex()], -1));
+                }
+                if(!isBoard(EAST)){
+                    quads.add(bakeFace(facing, frame, rightFrameShape, verticalFrameUVs[facing.getIndex()], -1));
+                }
+                if(!isBoard(UP)){
+                    quads.add(bakeFace(facing, frame, topFrameShape, horizontalFrameUVs[facing.getIndex()], -1));
+                }
+                if(!isBoard(DOWN)){
+                    quads.add(bakeFace(facing, frame, bottomFrameShape, horizontalFrameUVs[facing.getIndex()], -1));
+                }
             }
 
             quads.add(bakeFace(NORTH, frame, backFrameShape, backFrameUV, -1));
@@ -94,6 +108,12 @@ public class ModelBulletinBoard implements IModel{
 
         private BakedQuad bakeFace(EnumFacing facing, TextureAtlasSprite texture, Pair<Vector3f,Vector3f> shape, BlockFaceUV uv, int tintindex){
             return bakery.makeBakedQuad(shape.getLeft(), shape.getRight(), new BlockPartFace(facing, tintindex, "", uv), texture, facing, rotation, null, true, true);
+        }
+
+        private boolean isBoard(EnumFacing facing){
+            facing = rotation.rotate(facing);
+            BlockPos blockPos = pos.add(facing.getFrontOffsetX(), facing.getFrontOffsetY(), facing.getFrontOffsetZ());
+            return Minecraft.getMinecraft().theWorld.getBlockState(blockPos).getBlock() == EnumBlock.BulletinBoard.getBlock();
         }
 
         @Override
@@ -128,6 +148,7 @@ public class ModelBulletinBoard implements IModel{
 
         @Override
         public IBakedModel handleBlockState(IBlockState state){
+            pos = ((IExtendedBlockState) state).getValue(BlockBulletinBoard.POS);
             return this;
         }
     }
