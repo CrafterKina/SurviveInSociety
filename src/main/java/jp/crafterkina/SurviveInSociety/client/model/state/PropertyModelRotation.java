@@ -6,41 +6,19 @@
 package jp.crafterkina.SurviveInSociety.client.model.state;
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import net.minecraft.client.resources.model.ModelRotation;
-import net.minecraftforge.common.property.IUnlistedProperty;
 
-public class PropertyModelRotation implements IUnlistedProperty<ModelRotation>{
-    private final String name;
-    private final Predicate<ModelRotation> validator;
+public class PropertyModelRotation extends UnlistedPropertyBase<ModelRotation>{
+    public PropertyModelRotation(String name){
+        super(name);
+    }
 
     public PropertyModelRotation(String name, Predicate<ModelRotation> validator){
-        this.name = name;
-        this.validator = validator;
-    }
-
-    public PropertyModelRotation(String name){
-        this(name, Predicates.<ModelRotation>alwaysTrue());
-    }
-
-
-    @Override
-    public String getName(){
-        return name;
-    }
-
-    @Override
-    public boolean isValid(ModelRotation value){
-        return validator.apply(value);
+        super(name, validator);
     }
 
     @Override
     public Class<ModelRotation> getType(){
         return ModelRotation.class;
-    }
-
-    @Override
-    public String valueToString(ModelRotation value){
-        return value.toString();
     }
 }
