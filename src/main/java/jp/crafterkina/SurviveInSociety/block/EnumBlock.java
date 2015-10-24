@@ -83,7 +83,7 @@ public enum EnumBlock{
     public static void registerModels(){
         for(EnumBlock value : values){
             ItemMeshDefinition definition = value.registerModel();
-            if(definition == null) continue;
+            if(definition == null || value.item == null) continue;
             ModelLoader.setCustomMeshDefinition(value.item, definition);
         }
     }
