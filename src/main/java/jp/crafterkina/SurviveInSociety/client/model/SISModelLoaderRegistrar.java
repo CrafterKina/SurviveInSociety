@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class SISModelLoaderRegistrar{
     public static void register(){
-        Multimap<String,ResourceLocation> map = HashMultimap.create();
+        Multimap<Class<? extends IModel>,ResourceLocation> map = HashMultimap.create();
         HasCustomModel annotation;
         for(EnumBlock enumBlock : EnumBlock.values()){
             annotation = wrapAnnotation(enumBlock.getBlock().getClass().getAnnotation(HasCustomModel.class), enumBlock.getName());
@@ -41,7 +41,7 @@ public class SISModelLoaderRegistrar{
             if(annotation != null) map.put(annotation.value(), new ResourceLocation(annotation.location()));
         }
         SISInformation.getLogger().debug("trying registration %d custom models", map.size());
-        for(Map.Entry<String,Collection<ResourceLocation>> entry : map.asMap().entrySet()){
+        for(Map.Entry<Class<? extends IModel>,Collection<ResourceLocation>> entry : map.asMap().entrySet()){
             try{
                 ModelLoaderRegistry.registerLoader(new NormalModelLoader(entry.getKey(), entry.getValue().toArray(new ResourceLocation[entry.getValue().size()])));
             }catch(ClassNotFoundException e){
@@ -58,7 +58,7 @@ public class SISModelLoaderRegistrar{
             }
 
             @Override
-            public String value(){
+            public Class<? extends IModel> value(){
                 return model.value();
             }
 
@@ -72,7 +72,7 @@ public class SISModelLoaderRegistrar{
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface HasCustomModel{
-        String value();
+        Class<? extends IModel> value();
 
         String location() default "";
     }
@@ -83,8 +83,8 @@ public class SISModelLoaderRegistrar{
         private IResourceManager resourceManager;
 
         @SuppressWarnings("unchecked")
-        private NormalModelLoader(String modelClass, ResourceLocation... locations) throws ClassNotFoundException{
-            this.modelClass = (Class<? extends IModel>) Class.forName(modelClass);
+        private NormalModelLoader(Class<? extends IModel> modelClass, ResourceLocation... locations) throws ClassNotFoundException{
+            this.modelClass = modelClass;
             this.location = locations;
         }
 
