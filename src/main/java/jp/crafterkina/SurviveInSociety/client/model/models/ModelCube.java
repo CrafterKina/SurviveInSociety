@@ -12,7 +12,9 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimaps;
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
-import jp.crafterkina.SurviveInSociety.item.EnumItem;
+import jp.crafterkina.SurviveInSociety.client.model.state.PropertyGeneral;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -21,6 +23,7 @@ import net.minecraft.client.resources.model.ModelRotation;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -40,12 +43,7 @@ public class ModelCube implements IModel{
         if(location.getResourcePath().contains("block")){
             EnumBlock enumBlock = EnumBlock.valueOf(name);
             if(enumBlock.getBlock() instanceof User){
-                textures = ((User) enumBlock.getBlock()).getTextures();
-            }
-        }else if(location.getResourcePath().contains("item")){
-            EnumItem enumItem = EnumItem.valueOf(name);
-            if(enumItem.getItem() instanceof User){
-                textures = ((User) enumItem.getItem()).getTextures();
+                textures = ((IExtendedBlockState) enumBlock.getBlock().getDefaultState()).getValue(((User) enumBlock.getBlock()).getTextures());
             }
         }
     }
@@ -83,11 +81,15 @@ public class ModelCube implements IModel{
     }
 
     public interface User{
-        ListMultimap<EnumFacing,Pair<ResourceLocation,Integer>> getTextures();
+        PropertyGeneral<ListMultimap<EnumFacing,Pair<ResourceLocation,Integer>>> getTextures();
+    }
+
+    public interface Rotatable extends User{
+        PropertyGeneral<ModelRotation> getRotationProperty();
     }
 
     @SuppressWarnings("deprecation")
-    private class Baked implements IFlexibleBakedModel, IPerspectiveAwareModel{
+    private class Baked implements IFlexibleBakedModel, IPerspectiveAwareModel, ISmartBlockModel{
         private final ListMultimap<EnumFacing,Pair<TextureAtlasSprite,Integer>> multimap;
         private final Vector3f from = new Vector3f(0, 0, 0);
         private final Vector3f to = new Vector3f(16, 16, 16);
@@ -97,6 +99,7 @@ public class ModelCube implements IModel{
         private final Vector3f scaleThirdPerson = new Vector3f(0.375F, 0.375F, 0.375F);
         private final Quat4f rotateThirdPerson = TRSRTransformation.quatFromYXZDegrees(new Vector3f(10, 0, 0));
         private final Quat4f rotateFirstPerson = TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, 90, 0));
+        private ModelRotation rotation = null;
 
         {
             rotateThirdPerson.mul(TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, -45, 0)));
@@ -119,7 +122,7 @@ public class ModelCube implements IModel{
         }
 
         private BakedQuad bakeQuad(EnumFacing facing, TextureAtlasSprite texture, int tintindex){
-            return bakery.makeBakedQuad(from, to, new BlockPartFace(EnumFacing.NORTH, tintindex, "", uv), texture, facing, ModelRotation.X0_Y0, null, true, true);
+            return bakery.makeBakedQuad(from, to, new BlockPartFace(EnumFacing.NORTH, tintindex, "", uv), texture, facing, rotation, null, true, true);
         }
 
         @Override
@@ -144,7 +147,7 @@ public class ModelCube implements IModel{
 
         @Override
         public TextureAtlasSprite getTexture(){
-            return multimap.get(null).iterator().next().getLeft();
+            return multimap.get(null).get(0).getLeft();
         }
 
         @Override
@@ -166,6 +169,15 @@ public class ModelCube implements IModel{
                 matrix4f = TRSRTransformation.mul(null, rotateFirstPerson, null, null);
             }
             return Pair.of((IBakedModel) this, matrix4f);
+        }
+
+        @Override
+        public IBakedModel handleBlockState(IBlockState state){
+            Block block = state.getBlock();
+            if(block instanceof Rotatable){
+                rotation = ((IExtendedBlockState) state).getValue(((Rotatable) block).getRotationProperty());
+            }
+            return this;
         }
     }
 }
