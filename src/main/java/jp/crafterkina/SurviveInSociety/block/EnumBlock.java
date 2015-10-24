@@ -26,7 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public enum EnumBlock{
-    BulletinBoard(new BlockBulletinBoard(), null, "bulletin_board"),
+    BulletinBoard(new Builder(new BlockBulletinBoard()).setItem(null)),
     ;
 
     public static final EnumBlock[] values = values();
