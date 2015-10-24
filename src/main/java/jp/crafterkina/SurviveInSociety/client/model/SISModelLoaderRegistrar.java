@@ -35,14 +35,14 @@ public class SISModelLoaderRegistrar{
         HasCustomModel annotation;
         for(EnumBlock enumBlock : EnumBlock.values()){
             annotation = enumBlock.getBlock().getClass().getAnnotation(HasCustomModel.class);
-            map.put(annotation.value(), new ResourceLocation(annotation.location()));
+            if(annotation != null) map.put(annotation.value(), new ResourceLocation(annotation.location()));
             if(enumBlock.getItem() == null) continue;
             annotation = enumBlock.getItem().getClass().getAnnotation(HasCustomModel.class);
-            map.put(annotation.value(), new ResourceLocation(annotation.location()));
+            if(annotation != null) map.put(annotation.value(), new ResourceLocation(annotation.location()));
         }
         for(EnumItem enumItem : EnumItem.values()){
             annotation = enumItem.getItem().getClass().getAnnotation(HasCustomModel.class);
-            map.put(annotation.value(), new ResourceLocation(annotation.location()));
+            if(annotation != null) map.put(annotation.value(), new ResourceLocation(annotation.location()));
         }
         SISInformation.getLogger().debug("trying registration %d custom models", map.size());
         for(Map.Entry<String,Collection<ResourceLocation>> entry : map.asMap().entrySet()){
