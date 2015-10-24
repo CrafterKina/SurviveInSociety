@@ -71,7 +71,7 @@ public enum EnumEntity{
         }
     }
 
-    class Builder{
+    private static class Builder{
         private Class<? extends Entity> entityClass;
         private int trackingRange = 250;
         private int updateFrequency = 1;
