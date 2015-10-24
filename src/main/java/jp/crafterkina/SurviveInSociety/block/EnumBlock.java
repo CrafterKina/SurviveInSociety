@@ -106,7 +106,7 @@ public enum EnumBlock{
         return name;
     }
 
-    private class Builder{
+    private static class Builder{
         private Block block;
         private Item item;
         private String name = null;
