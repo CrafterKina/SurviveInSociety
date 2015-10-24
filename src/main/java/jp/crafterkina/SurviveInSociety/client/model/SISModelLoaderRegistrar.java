@@ -97,7 +97,7 @@ public class SISModelLoaderRegistrar{
         @SuppressWarnings("unchecked")
         public IModel loadModel(ResourceLocation modelLocation) throws IOException{
             try{
-                return modelClass.getConstructor(IResourceManager.class).newInstance(resourceManager);
+                return modelClass.getConstructor(Object[].class).newInstance(resourceManager, modelLocation);
             }catch(NoSuchMethodException ignore){
             }catch(InvocationTargetException e){
                 throw new AssertionError(e);
