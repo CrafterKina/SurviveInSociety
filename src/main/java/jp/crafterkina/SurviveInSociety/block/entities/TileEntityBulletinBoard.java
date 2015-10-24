@@ -22,11 +22,9 @@ public class TileEntityBulletinBoard extends TileEntity{
     @Override
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        NBTTagCompound itemCompound = new NBTTagCompound();
         if(stack != null){
-            stack.writeToNBT(itemCompound);
+            compound.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
         }
-        compound.setTag("stack", itemCompound);
     }
 
     public ItemStack updateContent(){
