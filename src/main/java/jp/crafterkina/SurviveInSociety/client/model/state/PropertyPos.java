@@ -7,22 +7,21 @@ package jp.crafterkina.SurviveInSociety.client.model.state;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import net.minecraft.client.resources.model.ModelRotation;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-public class ModelRotationProperty implements IUnlistedProperty<ModelRotation>{
+public class PropertyPos implements IUnlistedProperty<BlockPos>{
     private final String name;
-    private final Predicate<ModelRotation> validator;
+    private final Predicate<BlockPos> validator;
 
-    public ModelRotationProperty(String name, Predicate<ModelRotation> validator){
+    public PropertyPos(String name, Predicate<BlockPos> validator){
         this.name = name;
         this.validator = validator;
     }
 
-    public ModelRotationProperty(String name){
-        this(name, Predicates.<ModelRotation>alwaysTrue());
+    public PropertyPos(String name){
+        this(name, Predicates.<BlockPos>alwaysTrue());
     }
-
 
     @Override
     public String getName(){
@@ -30,17 +29,17 @@ public class ModelRotationProperty implements IUnlistedProperty<ModelRotation>{
     }
 
     @Override
-    public boolean isValid(ModelRotation value){
+    public boolean isValid(BlockPos value){
         return validator.apply(value);
     }
 
     @Override
-    public Class<ModelRotation> getType(){
-        return ModelRotation.class;
+    public Class<BlockPos> getType(){
+        return BlockPos.class;
     }
 
     @Override
-    public String valueToString(ModelRotation value){
+    public String valueToString(BlockPos value){
         return value.toString();
     }
 }
