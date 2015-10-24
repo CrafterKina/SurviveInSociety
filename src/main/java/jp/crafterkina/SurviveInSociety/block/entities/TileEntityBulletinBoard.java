@@ -31,6 +31,14 @@ public class TileEntityBulletinBoard extends TileEntity{
         return stack;
     }
 
+    public boolean hasContent(){
+        return stack != null;
+    }
+
+    public ItemStack getContent(){
+        return stack.copy();
+    }
+
     public void setContent(ItemStack content){
         if(!isValid(content)) return;
         stack = content;
