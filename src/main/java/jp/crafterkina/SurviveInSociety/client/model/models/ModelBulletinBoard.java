@@ -9,6 +9,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
 import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
+import jp.crafterkina.SurviveInSociety.block.entities.TileEntityBulletinBoard;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
@@ -66,7 +67,7 @@ public class ModelBulletinBoard implements IModel{
         private final Pair<Vector3f,Vector3f> rightFrameShape = Pair.of(new Vector3f(15, 0, 0), new Vector3f(16, 16, 2));
         private final BlockFaceUV[] verticalFrameUVs = new BlockFaceUV[]{new BlockFaceUV(new float[]{0, 0, 1, 2}, 0), new BlockFaceUV(new float[]{0, 0, 1, 2}, 0), new BlockFaceUV(new float[]{0, 0, 1, 16}, 0), new BlockFaceUV(new float[]{0, 0, 1, 16}, 0), new BlockFaceUV(new float[]{0, 0, 2, 16}, 0), new BlockFaceUV(new float[]{0, 0, 2, 16}, 0)};
         private final BlockFaceUV[] horizontalFrameUVs = new BlockFaceUV[]{new BlockFaceUV(new float[]{0, 0, 16, 2}, 0), new BlockFaceUV(new float[]{0, 0, 16, 2}, 0), new BlockFaceUV(new float[]{0, 0, 16, 1}, 0), new BlockFaceUV(new float[]{0, 0, 16, 1}, 0), new BlockFaceUV(new float[]{0, 0, 2, 1}, 0), new BlockFaceUV(new float[]{0, 0, 2, 1}, 0)};
-        private ITransformation rotation = ModelRotation.X0_Y0;
+        private ITransformation transformation = ModelRotation.X0_Y0;
         private BlockPos pos = BlockPos.ORIGIN;
 
         private Baked(TextureAtlasSprite base, TextureAtlasSprite frame){
@@ -107,13 +108,13 @@ public class ModelBulletinBoard implements IModel{
         }
 
         private BakedQuad bakeFace(EnumFacing facing, TextureAtlasSprite texture, Pair<Vector3f,Vector3f> shape, BlockFaceUV uv, int tintindex){
-            return bakery.makeBakedQuad(shape.getLeft(), shape.getRight(), new BlockPartFace(facing, tintindex, "", uv), texture, facing, rotation, null, true, true);
+            return bakery.makeBakedQuad(shape.getLeft(), shape.getRight(), new BlockPartFace(facing, tintindex, "", uv), texture, facing, transformation, null, true, true);
         }
 
         private boolean isBoard(EnumFacing facing){
-            facing = rotation.rotate(facing);
+            facing = transformation.rotate(facing);
             BlockPos blockPos = pos.add(facing.getFrontOffsetX(), facing.getFrontOffsetY(), facing.getFrontOffsetZ());
-            return Minecraft.getMinecraft().theWorld.getBlockState(blockPos).getBlock() == EnumBlock.BulletinBoard.getBlock();
+            return Minecraft.getMinecraft().theWorld.getBlockState(blockPos).getBlock() == EnumBlock.BulletinBoard.getBlock() && transformation.equals(((TileEntityBulletinBoard) Minecraft.getMinecraft().theWorld.getTileEntity(blockPos)).getTransformation());
         }
 
         @Override
@@ -149,6 +150,7 @@ public class ModelBulletinBoard implements IModel{
         @Override
         public IBakedModel handleBlockState(IBlockState state){
             pos = ((IExtendedBlockState) state).getValue(BlockBulletinBoard.POS);
+            transformation = ((TileEntityBulletinBoard) Minecraft.getMinecraft().theWorld.getTileEntity(pos)).getTransformation();
             return this;
         }
     }
