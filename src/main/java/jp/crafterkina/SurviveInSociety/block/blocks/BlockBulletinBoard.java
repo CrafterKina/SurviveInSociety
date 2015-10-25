@@ -49,6 +49,16 @@ public class BlockBulletinBoard extends BlockContainer{
         return ((IExtendedBlockState) state).withProperty(POS, pos);
     }
 
+    @Override
+    public boolean isOpaqueCube(){
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(){
+        return false;
+    }
+
     /**
      * The type of render function that is called for this block
      */
