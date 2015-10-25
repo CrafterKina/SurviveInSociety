@@ -14,8 +14,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.model.ModelRotation;
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -23,6 +27,8 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.List;
 
 @SISModelLoaderRegistrar.HasCustomModel(ModelBulletinBoard.class)
 public class BlockBulletinBoard extends BlockContainer{
@@ -37,6 +43,34 @@ public class BlockBulletinBoard extends BlockContainer{
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityBulletinBoard();
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos){
+        ModelRotation rotation = (ModelRotation) ((TileEntityBulletinBoard) worldIn.getTileEntity(pos)).getTransformation();
+        float f = 1 / 16f;
+        switch(rotation.rotate(EnumFacing.NORTH)){
+            case NORTH:{
+                setBlockBounds(0, 0, 0, 16 * f, 16 * f, 1 * f);
+                break;
+            }
+            case SOUTH:{
+                setBlockBounds(0, 0, 15 * f, 16 * f, 16 * f, 16 * f);
+                break;
+            }
+            case WEST:{
+                setBlockBounds(0, 0, 0, 1 * f, 16 * f, 16 * f);
+                break;
+            }
+            case EAST:{
+                setBlockBounds(15 * f, 0, 0, 16 * f, 16 * f, 16 * f);
+                break;
+            }
+        }
     }
 
     @Override
