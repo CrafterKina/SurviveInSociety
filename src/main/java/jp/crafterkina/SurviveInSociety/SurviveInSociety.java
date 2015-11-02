@@ -5,14 +5,13 @@
 
 package jp.crafterkina.SurviveInSociety;
 
-import jp.crafterkina.KinaCore.misclib.base.fle.IFMLStateEvents;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
 
 @Mod(modid = SurviveInSociety.PARENT_PACKAGE)
-public class SurviveInSociety implements IFMLStateEvents{
+public class SurviveInSociety{
 
     public static final String PARENT_PACKAGE = "jp.crafterkina.SurviveInSociety";
 
@@ -26,7 +25,6 @@ public class SurviveInSociety implements IFMLStateEvents{
 
     //Proxy//
 
-    @Override
     @EventHandler
     public void construction(FMLConstructionEvent event){
         for(Proxy proxy : Proxy.values){
@@ -36,7 +34,6 @@ public class SurviveInSociety implements IFMLStateEvents{
         }
     }
 
-    @Override
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         for(Proxy proxy : Proxy.values){
@@ -46,7 +43,6 @@ public class SurviveInSociety implements IFMLStateEvents{
         }
     }
 
-    @Override
     @EventHandler
     public void init(FMLInitializationEvent event){
         for(Proxy proxy : Proxy.values){
@@ -56,7 +52,6 @@ public class SurviveInSociety implements IFMLStateEvents{
         }
     }
 
-    @Override
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
         for(Proxy proxy : Proxy.values){
@@ -66,7 +61,6 @@ public class SurviveInSociety implements IFMLStateEvents{
         }
     }
 
-    @Override
     @EventHandler
     public void complete(FMLLoadCompleteEvent event){
         for(Proxy proxy : Proxy.values){
