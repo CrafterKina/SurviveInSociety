@@ -36,7 +36,10 @@ public class BlockBulletinBoard extends BlockContainer{
     public static final PropertyGeneral<BlockPos> POS = new PropertyGeneral<BlockPos>("pos", BlockPos.class);
 
     public BlockBulletinBoard(){
-        super(Material.rock);
+        super(Material.wood);
+        setHardness(3.0F);
+        setLightLevel(0.125F);
+        setStepSound(soundTypeWood);
         GameRegistry.registerTileEntity(TileEntityBulletinBoard.class, BlockBulletinBoard.class.getCanonicalName());
         setDefaultState(((IExtendedBlockState) blockState.getBaseState()).withProperty(POS, BlockPos.ORIGIN));
     }
