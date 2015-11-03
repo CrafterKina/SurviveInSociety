@@ -9,6 +9,7 @@ import jp.crafterkina.SurviveInSociety.block.entities.TileEntityBulletinBoard;
 import jp.crafterkina.SurviveInSociety.client.model.SISModelLoaderRegistrar;
 import jp.crafterkina.SurviveInSociety.client.model.models.ModelBulletinBoard;
 import jp.crafterkina.SurviveInSociety.client.model.state.PropertyGeneral;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -47,6 +48,17 @@ public class BlockBulletinBoard extends BlockContainer{
 
     @Override
     public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity){
+    }
+
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock){
+        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+        TileEntityBulletinBoard te = (TileEntityBulletinBoard) worldIn.getTileEntity(pos);
+        EnumFacing facing = te.getTransformation().rotate(EnumFacing.NORTH);
+        BlockPos offset = pos.offset(facing);
+        if(!worldIn.isSideSolid(offset, facing.getOpposite(), true)){
+            worldIn.setBlockToAir(pos);
+        }
     }
 
     @Override
