@@ -44,7 +44,7 @@ public class TileEntityBulletinBoard extends TileEntity{
     }
 
     public ItemStack getContent(){
-        return stack.copy();
+        return ItemStack.copyItemStack(stack);
     }
 
     public void setContent(ItemStack content){
