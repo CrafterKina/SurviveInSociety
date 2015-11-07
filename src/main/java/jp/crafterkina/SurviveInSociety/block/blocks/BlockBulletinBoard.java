@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.block.blocks;
 
+import jp.crafterkina.SurviveInSociety.block.EnumBlock;
 import jp.crafterkina.SurviveInSociety.block.entities.TileEntityBulletinBoard;
 import jp.crafterkina.SurviveInSociety.client.model.SISModelLoaderRegistrar;
 import jp.crafterkina.SurviveInSociety.client.model.models.ModelBulletinBoard;
@@ -17,6 +18,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelRotation;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -24,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ITransformation;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -34,6 +37,7 @@ import java.util.List;
 @SISModelLoaderRegistrar.HasCustomModel(ModelBulletinBoard.class)
 public class BlockBulletinBoard extends BlockContainer{
     public static final PropertyGeneral<BlockPos> POS = new PropertyGeneral<BlockPos>("pos", BlockPos.class);
+    private static final ITransformation[] transformations = ModelRotation.values();
 
     public BlockBulletinBoard(){
         super(Material.wood);
@@ -42,6 +46,24 @@ public class BlockBulletinBoard extends BlockContainer{
         setStepSound(soundTypeWood);
         GameRegistry.registerTileEntity(TileEntityBulletinBoard.class, BlockBulletinBoard.class.getCanonicalName());
         setDefaultState(((IExtendedBlockState) blockState.getBaseState()).withProperty(POS, BlockPos.ORIGIN));
+    }
+
+    public static void setBulletinBord(World world, BlockPos pos, EnumFacing facing){
+        facing = facing.getOpposite();
+        ITransformation rotation;
+        byte i;
+        for(i = 0; i < transformations.length; i++){
+            rotation = transformations[i];
+            if(rotation.rotate(EnumFacing.NORTH) == facing){
+                break;
+            }
+        }
+        world.setBlockState(pos, ((IExtendedBlockState) EnumBlock.BulletinBoard.getBlock().getDefaultState()).withProperty(POS, pos));
+        TileEntityBulletinBoard te = (TileEntityBulletinBoard) world.getTileEntity(pos);
+        NBTTagCompound compound = new NBTTagCompound();
+        te.writeToNBT(compound);
+        compound.setByte("rotation", i);
+        te.readFromNBT(compound);
     }
 
     @Override
