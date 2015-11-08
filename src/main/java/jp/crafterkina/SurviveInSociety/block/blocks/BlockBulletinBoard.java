@@ -66,6 +66,18 @@ public class BlockBulletinBoard extends BlockContainer{
         te.readFromNBT(compound);
     }
 
+    public static boolean setBulletinBord(World world, BlockPos pos){
+        for(EnumFacing facing : EnumFacing.values()){
+            EnumFacing opposite = facing.getOpposite();
+            BlockPos offset = pos.offset(opposite);
+            if(world.isSideSolid(offset, opposite, false)){
+                setBulletinBord(world, pos, facing);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityBulletinBoard();
