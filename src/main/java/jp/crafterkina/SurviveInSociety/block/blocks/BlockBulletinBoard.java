@@ -48,8 +48,8 @@ public class BlockBulletinBoard extends BlockContainer{
         setDefaultState(((IExtendedBlockState) blockState.getBaseState()).withProperty(POS, BlockPos.ORIGIN));
     }
 
-    public static void setBulletinBord(World world, BlockPos pos, EnumFacing facing){
-        if(!world.isSideSolid(pos.offset(facing), facing, true)) return;
+    public static boolean setBulletinBord(World world, BlockPos pos, EnumFacing facing){
+        if(!canStay(world, pos)) return false;
         ITransformation rotation;
         byte i;
         for(i = 0; i < transformations.length; i++){
@@ -64,6 +64,7 @@ public class BlockBulletinBoard extends BlockContainer{
         te.writeToNBT(compound);
         compound.setByte("rotation", i);
         te.readFromNBT(compound);
+        return true;
     }
 
     public static boolean setBulletinBord(World world, BlockPos pos){
@@ -78,6 +79,24 @@ public class BlockBulletinBoard extends BlockContainer{
         return false;
     }
 
+    @SuppressWarnings("unchecked")
+    private static boolean canStay(World worldIn, BlockPos pos){
+        ITransformation transformation = ((TileEntityBulletinBoard) worldIn.getTileEntity(pos)).getTransformation();
+        EnumFacing facing = transformation.rotate(EnumFacing.NORTH);
+        BlockPos offset = pos.offset(facing);
+        if(!worldIn.isSideSolid(offset, facing.getOpposite(), true)){
+            for(BlockPos neighbors : (Iterable<? extends BlockPos>) BlockPos.getAllInBox(pos.add(-1, -1, -1), pos.add(1, 1, 1))){
+                TileEntity te = worldIn.getTileEntity(neighbors);
+                if(te == null || !(te instanceof TileEntityBulletinBoard)) continue;
+                TileEntityBulletinBoard board = (TileEntityBulletinBoard) te;
+                if(!board.getTransformation().equals(transformation)) continue;
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityBulletinBoard();
@@ -90,12 +109,7 @@ public class BlockBulletinBoard extends BlockContainer{
     @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock){
         super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
-        TileEntityBulletinBoard te = (TileEntityBulletinBoard) worldIn.getTileEntity(pos);
-        EnumFacing facing = te.getTransformation().rotate(EnumFacing.NORTH);
-        BlockPos offset = pos.offset(facing);
-        if(!worldIn.isSideSolid(offset, facing.getOpposite(), true)){
-            worldIn.setBlockToAir(pos);
-        }
+        if(!canStay(worldIn, pos)) worldIn.setBlockToAir(pos);
     }
 
     @Override
