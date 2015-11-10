@@ -49,7 +49,7 @@ public class BlockBulletinBoard extends BlockContainer{
     }
 
     public static void setBulletinBord(World world, BlockPos pos, EnumFacing facing){
-        facing = facing.getOpposite();
+        if(!world.isSideSolid(pos.offset(facing), facing, true)) return;
         ITransformation rotation;
         byte i;
         for(i = 0; i < transformations.length; i++){
