@@ -67,18 +67,6 @@ public class BlockBulletinBoard extends BlockContainer{
         return true;
     }
 
-    public static boolean setBulletinBord(World world, BlockPos pos){
-        for(EnumFacing facing : EnumFacing.values()){
-            EnumFacing opposite = facing.getOpposite();
-            BlockPos offset = pos.offset(opposite);
-            if(world.isSideSolid(offset, opposite, false)){
-                setBulletinBord(world, pos, facing);
-                return true;
-            }
-        }
-        return false;
-    }
-
     @SuppressWarnings("unchecked")
     private static boolean canStay(World worldIn, BlockPos pos){
         ITransformation transformation = ((TileEntityBulletinBoard) worldIn.getTileEntity(pos)).getTransformation();
