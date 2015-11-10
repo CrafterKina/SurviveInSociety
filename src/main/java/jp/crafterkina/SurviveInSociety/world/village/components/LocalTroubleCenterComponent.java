@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.world.village.components;
 
+import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWallSign;
 import net.minecraft.init.Blocks;
@@ -114,13 +115,20 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
             }
         }
 
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//•\
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//ï¿½\
         this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, coordBaseMode.rotateYCCW()), -1, 2, 3, structureBoundingBoxIn);
         BlockPos blockpos = new BlockPos(this.getXWithOffset(-1, 3), this.getYWithOffset(2), this.getZWithOffset(-1, 3));
         if(worldIn.getTileEntity(blockpos) != null){
             ((TileEntitySign) worldIn.getTileEntity(blockpos)).signText[1] = new ChatComponentText("Enter");
         }
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//— 
+
+        EnumFacing facing = coordBaseMode.getAxis() == EnumFacing.Axis.Z ? EnumFacing.EAST : EnumFacing.SOUTH;
+        for(k = 1; k <= 4; k++){
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 2, k)), facing);
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 3, k)), facing);
+        }
+
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//ï¿½ï¿½
 
         for(k = 0; k < 5; ++k){
             for(l = 0; l < 8; ++l){
@@ -137,6 +145,10 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         if(boundingBoxIn.isVecInside(blockpos)){
             ItemDoor.placeDoor(worldIn, blockpos, facing.rotateYCCW(), door);
         }
+    }
+
+    protected BlockPos getFixedPos(BlockPos pos){
+        return new BlockPos(this.getXWithOffset(pos.getX(), pos.getZ()), this.getYWithOffset(pos.getY()), this.getZWithOffset(pos.getX(), pos.getZ()));
     }
 
     private enum Type{
