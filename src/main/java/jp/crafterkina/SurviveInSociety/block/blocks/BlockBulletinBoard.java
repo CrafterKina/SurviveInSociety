@@ -49,7 +49,6 @@ public class BlockBulletinBoard extends BlockContainer{
     }
 
     public static boolean setBulletinBord(World world, BlockPos pos, EnumFacing facing){
-        if(!canStay(world, pos)) return false;
         ITransformation rotation;
         byte i;
         for(i = 0; i < transformations.length; i++){
@@ -59,6 +58,7 @@ public class BlockBulletinBoard extends BlockContainer{
             }
         }
         world.setBlockState(pos, ((IExtendedBlockState) EnumBlock.BulletinBoard.getBlock().getDefaultState()).withProperty(POS, pos));
+        if(!canStay(world, pos)) return false;
         TileEntityBulletinBoard te = (TileEntityBulletinBoard) world.getTileEntity(pos);
         NBTTagCompound compound = new NBTTagCompound();
         te.writeToNBT(compound);
@@ -69,12 +69,14 @@ public class BlockBulletinBoard extends BlockContainer{
 
     @SuppressWarnings("unchecked")
     private static boolean canStay(World worldIn, BlockPos pos){
-        ITransformation transformation = ((TileEntityBulletinBoard) worldIn.getTileEntity(pos)).getTransformation();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if(te == null || !(te instanceof TileEntityBulletinBoard)) return false;
+        ITransformation transformation = ((TileEntityBulletinBoard) te).getTransformation();
         EnumFacing facing = transformation.rotate(EnumFacing.NORTH);
         BlockPos offset = pos.offset(facing);
         if(!worldIn.isSideSolid(offset, facing.getOpposite(), true)){
             for(BlockPos neighbors : (Iterable<? extends BlockPos>) BlockPos.getAllInBox(pos.add(-1, -1, -1), pos.add(1, 1, 1))){
-                TileEntity te = worldIn.getTileEntity(neighbors);
+                te = worldIn.getTileEntity(neighbors);
                 if(te == null || !(te instanceof TileEntityBulletinBoard)) continue;
                 TileEntityBulletinBoard board = (TileEntityBulletinBoard) te;
                 if(!board.getTransformation().equals(transformation)) continue;
