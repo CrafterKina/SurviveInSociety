@@ -17,6 +17,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public enum EnumItem{
+    Requisition,
     ;
 
     public static final EnumItem[] values = values();

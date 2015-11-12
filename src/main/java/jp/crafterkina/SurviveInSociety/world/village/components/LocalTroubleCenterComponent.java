@@ -5,6 +5,7 @@
 
 package jp.crafterkina.SurviveInSociety.world.village.components;
 
+import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWallSign;
 import net.minecraft.init.Blocks;
@@ -114,16 +115,33 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
             }
         }
 
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//�\
-        this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, coordBaseMode.rotateYCCW()), -1, 2, 3, structureBoundingBoxIn);
-        BlockPos blockpos = new BlockPos(this.getXWithOffset(-1, 3), this.getYWithOffset(2), this.getZWithOffset(-1, 3));
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//�\
+
+        EnumFacing facing = coordBaseMode.getAxis() == EnumFacing.Axis.Z ? EnumFacing.EAST : EnumFacing.SOUTH;
+        this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing.getOpposite()), -1, 2, 3, structureBoundingBoxIn);
+        BlockPos blockpos = getFixedPos(new BlockPos(-1, 2, 3));
         if(worldIn.getTileEntity(blockpos) != null){
             ((TileEntitySign) worldIn.getTileEntity(blockpos)).signText[1] = new ChatComponentText("Enter");
         }
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//��
+        for(k = 1; k <= 4; k++){
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 2, k)), facing);
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 3, k)), facing);
+        }
 
-        for(k = 0; k < 5; ++k){
-            for(l = 0; l < 8; ++l){
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//��
+
+        this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing), 6, 2, 6, structureBoundingBoxIn);
+        blockpos = getFixedPos(new BlockPos(6, 2, 6));
+        if(worldIn.getTileEntity(blockpos) != null){
+            TileEntitySign sign = (TileEntitySign) worldIn.getTileEntity(blockpos);
+            sign.signText[0] = new ChatComponentText("AUTHORIZED");
+            sign.signText[1] = new ChatComponentText("PERSONNEL");
+            sign.signText[2] = new ChatComponentText("ONLY");
+            sign.signText[3] = new ChatComponentText("--×--×--×--×--×--×--");
+        }
+
+        for(k = 0; k < 8; ++k){
+            for(l = 0; l < 6; ++l){
                 this.clearCurrentPositionBlocksUpwards(worldIn, l, 7, k, structureBoundingBoxIn);
                 this.replaceAirAndLiquidDownwards(worldIn, Blocks.cobblestone.getDefaultState(), l, -1, k, structureBoundingBoxIn);
             }
@@ -137,6 +155,10 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         if(boundingBoxIn.isVecInside(blockpos)){
             ItemDoor.placeDoor(worldIn, blockpos, facing.rotateYCCW(), door);
         }
+    }
+
+    protected BlockPos getFixedPos(BlockPos pos){
+        return new BlockPos(this.getXWithOffset(pos.getX(), pos.getZ()), this.getYWithOffset(pos.getY()), this.getZWithOffset(pos.getX(), pos.getZ()));
     }
 
     private enum Type{
