@@ -119,7 +119,7 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
 
         EnumFacing facing = coordBaseMode.getAxis() == EnumFacing.Axis.Z ? EnumFacing.EAST : EnumFacing.SOUTH;
         this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing.getOpposite()), -1, 2, 3, structureBoundingBoxIn);
-        BlockPos blockpos = new BlockPos(this.getXWithOffset(-1, 3), this.getYWithOffset(2), this.getZWithOffset(-1, 3));
+        BlockPos blockpos = getFixedPos(new BlockPos(-1, 2, 3));
         if(worldIn.getTileEntity(blockpos) != null){
             ((TileEntitySign) worldIn.getTileEntity(blockpos)).signText[1] = new ChatComponentText("Enter");
         }
@@ -129,6 +129,16 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         }
 
         this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//��
+
+        this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing), 6, 2, 6, structureBoundingBoxIn);
+        blockpos = getFixedPos(new BlockPos(6, 2, 6));
+        if(worldIn.getTileEntity(blockpos) != null){
+            TileEntitySign sign = (TileEntitySign) worldIn.getTileEntity(blockpos);
+            sign.signText[0] = new ChatComponentText("AUTHORIZED");
+            sign.signText[1] = new ChatComponentText("PERSONNEL");
+            sign.signText[2] = new ChatComponentText("ONLY");
+            sign.signText[3] = new ChatComponentText("--×--×--×--×--×--×--");
+        }
 
         for(k = 0; k < 8; ++k){
             for(l = 0; l < 6; ++l){
