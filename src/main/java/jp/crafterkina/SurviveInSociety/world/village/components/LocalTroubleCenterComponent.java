@@ -130,8 +130,8 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
 
         this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//��
 
-        for(k = 0; k < 5; ++k){
-            for(l = 0; l < 8; ++l){
+        for(k = 0; k < 8; ++k){
+            for(l = 0; l < 6; ++l){
                 this.clearCurrentPositionBlocksUpwards(worldIn, l, 7, k, structureBoundingBoxIn);
                 this.replaceAirAndLiquidDownwards(worldIn, Blocks.cobblestone.getDefaultState(), l, -1, k, structureBoundingBoxIn);
             }
