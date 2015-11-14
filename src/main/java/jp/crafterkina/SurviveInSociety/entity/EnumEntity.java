@@ -6,6 +6,7 @@
 package jp.crafterkina.SurviveInSociety.entity;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Supplier;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
 import jp.crafterkina.SurviveInSociety.client.entity.render.RenderReceptionist;
 import jp.crafterkina.SurviveInSociety.entity.entities.EntityReceptionist;
@@ -16,6 +17,8 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public enum EnumEntity{
     Receptionist(new Builder(EntityReceptionist.class, new RenderReceptionist(Minecraft.getMinecraft().getRenderManager()))),
@@ -28,7 +31,8 @@ public enum EnumEntity{
     private final int trackingRange;
     private final int updateFrequency;
     private final boolean sendsVelocityUpdates;
-    private final Render render;
+    @SideOnly(Side.CLIENT)
+    private final Supplier<? extends Render> render;
     private final boolean isLiving;
     private final int weightedProb;
     private final int groupMin;
@@ -69,9 +73,10 @@ public enum EnumEntity{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static void registerRender(){
         for(EnumEntity value : values){
-            RenderingRegistry.registerEntityRenderingHandler(value.entityClass, value.render);
+            RenderingRegistry.registerEntityRenderingHandler(value.entityClass, value.render.get());
         }
     }
 
@@ -80,7 +85,8 @@ public enum EnumEntity{
         private int trackingRange = 250;
         private int updateFrequency = 1;
         private boolean sendsVelocityUpdates = false;
-        private Render render;
+        @SideOnly(Side.CLIENT)
+        private Supplier<? extends Render> render;
         private boolean isLiving = false;
         private int weightedProb = 20;
         private int groupMin = 1;
@@ -91,9 +97,8 @@ public enum EnumEntity{
         private int primaryColor = 0xffffff;
         private int secondaryColor = 0xffffff;
 
-        private Builder(Class<? extends Entity> entityClass, Render render){
+        private Builder(Class<? extends Entity> entityClass){
             this.entityClass = entityClass;
-            this.render = render;
         }
 
         public Builder setEntityClass(Class<? extends Entity> entityClass){
@@ -116,7 +121,8 @@ public enum EnumEntity{
             return this;
         }
 
-        public Builder setRender(Render render){
+        @SideOnly(Side.CLIENT)
+        public Builder setRender(Supplier<? extends Render> render){
             this.render = render;
             return this;
         }
