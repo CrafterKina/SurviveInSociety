@@ -6,6 +6,7 @@
 package jp.crafterkina.SurviveInSociety.world.village.components;
 
 import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
+import jp.crafterkina.SurviveInSociety.entity.entities.EntityReceptionist;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWallSign;
 import net.minecraft.init.Blocks;
@@ -103,6 +104,10 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 2, 4, 8, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 3, 4, 8, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.iron_bars.getDefaultState(), 2, 2, 5, structureBoundingBoxIn);
+        EntityReceptionist receptionist = new EntityReceptionist(worldIn);
+        BlockPos pos = getFixedPos(new BlockPos(2, 1, 6));
+        receptionist.setPosition(pos.getX(), pos.getY(), pos.getZ());
+        worldIn.spawnEntityInWorld(receptionist);
         int i = this.getMetadataWithOffset(Blocks.oak_stairs, 0);
         int j = this.getMetadataWithOffset(Blocks.oak_stairs, 1);
         int k;
