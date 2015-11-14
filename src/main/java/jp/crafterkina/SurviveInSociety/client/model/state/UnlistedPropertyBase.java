@@ -9,6 +9,13 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/**
+ * basic implements of {@link IUnlistedProperty}.
+ *
+ * @param <T>
+ *         contains type.
+ * @see net.minecraftforge.common.property.IUnlistedProperty
+ */
 public abstract class UnlistedPropertyBase<T> implements IUnlistedProperty<T>{
     private final String name;
     private final Predicate<T> validator;

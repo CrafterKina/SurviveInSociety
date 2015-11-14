@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
 
+/**
+ * the entry point of this mod. pass all of the processing to the proxy.
+ */
 @Mod(modid = SurviveInSociety.PARENT_PACKAGE)
 public class SurviveInSociety{
 

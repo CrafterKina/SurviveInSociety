@@ -12,10 +12,19 @@ public class SISInformation{
 
     private SISInformation(){}
 
+    /**
+     * @return the logger of this mod.
+     */
     public static Logger getLogger(){
         return logger;
     }
 
+    /**
+     * setting the logger of this mod only once.
+     *
+     * @param logger
+     *         to set
+     */
     public static void setLogger(Logger logger){
         if(SISInformation.logger != null) return;
         SISInformation.logger = logger;

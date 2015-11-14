@@ -30,6 +30,9 @@ public enum EnumEventHandler{
         this.bus = bus;
     }
 
+    /**
+     * event handler registering method.
+     */
     public static void register(){
         for(EnumEventHandler handler : values){
             handler.getBus().register(handler.getInstance());

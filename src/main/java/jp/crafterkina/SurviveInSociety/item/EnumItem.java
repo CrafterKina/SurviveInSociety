@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public enum EnumItem{
     Requisition,
@@ -31,18 +33,29 @@ public enum EnumItem{
         this(new Item().setCreativeTab(CreativeTabs.tabMisc));
     }
 
+    /**
+     * item registering method.
+     */
     public static void registerItems(){
         for(EnumItem enumItem : values){
             GameRegistry.registerItem(enumItem.item, CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, enumItem.name()));
         }
     }
 
+    /**
+     * model of item registering method.
+     */
+    @SideOnly(Side.CLIENT)
     public static void registerModels(){
         for(EnumItem enumItem : values){
             enumItem.registerModel();
         }
     }
 
+    /**
+     * on registering model. you can override and do something.
+     */
+    @SideOnly(Side.CLIENT)
     protected void registerModel(){
         ItemMeshDefinition definition = new ItemMeshDefinition(){
             public ModelResourceLocation getModelLocation(ItemStack stack){

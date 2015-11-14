@@ -31,6 +31,9 @@ public enum EnumGuiContainer{
         this.container = container;
     }
 
+    /**
+     * gui handler registering method.
+     */
     public static void register(){
         NetworkRegistry.INSTANCE.registerGuiHandler(SurviveInSociety.getInstance(), new IGuiHandler(){
             @Override
@@ -97,10 +100,28 @@ public enum EnumGuiContainer{
         return createInstance(container, player, world, x, y, z);
     }
 
+    /**
+     * open gui.
+     *
+     * @param player
+     *         the opener
+     * @param world
+     *         contains the player
+     * @param pos
+     *         gui starting point or information
+     */
     public void openGui(EntityPlayer player, World world, Vec3i pos){
         player.openGui(SurviveInSociety.getInstance(), ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
     }
 
+    /**
+     * open gui.
+     * @param player the opener
+     * @param world contains the player
+     * @param x gui starting point x or 1st information
+     * @param y gui starting point y or 2nd information
+     * @param z gui starting point z or 3rd information
+     */
     public void openGui(EntityPlayer player, World world, int x, int y, int z){
         openGui(player, world, new Vec3i(x, y, z));
     }

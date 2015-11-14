@@ -14,6 +14,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Iterator;
 
+/**
+ * general event handler
+ */
 public enum CommonEventHandler{
     instance;
 

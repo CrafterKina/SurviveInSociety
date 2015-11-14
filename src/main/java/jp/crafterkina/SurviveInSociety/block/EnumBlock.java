@@ -22,6 +22,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -58,8 +59,16 @@ public enum EnumBlock{
         name = builder.name != null ? builder.name : CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name());
     }
 
+    /**
+     * @param block
+     *         to register block.
+     * @param item
+     *         nullable. may put block_item.
+     * @param name
+     *         the unique name in the mod.
+     */
     @SuppressWarnings("unchecked")
-    public static void registerBlock(Block block, Item item, String name){
+    public static void registerBlock(Block block, @Nullable Item item, String name){
         try{
             register.invoke(main.invoke(null), block, name);
             if(item != null){
@@ -73,12 +82,18 @@ public enum EnumBlock{
         }
     }
 
+    /**
+     * block registering method.
+     */
     public static void registerBlocks(){
         for(EnumBlock value : values){
             registerBlock(value.block, value.item, value.name);
         }
     }
 
+    /**
+     * block model registering method.
+     */
     @SideOnly(Side.CLIENT)
     public static void registerModels(){
         for(EnumBlock value : values){
@@ -88,7 +103,13 @@ public enum EnumBlock{
         }
     }
 
-    public ItemMeshDefinition registerModel(){
+    /**
+     * on registering model. you can override and do something.
+     *
+     * @return model of item block
+     */
+    @SideOnly(Side.CLIENT)
+    protected ItemMeshDefinition registerModel(){
         return new ItemMeshDefinition(){
             public ModelResourceLocation getModelLocation(ItemStack stack){
                 return new ModelResourceLocation(new ResourceLocation(SurviveInSociety.PARENT_PACKAGE, name), "inventory");

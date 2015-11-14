@@ -66,6 +66,9 @@ public enum EnumEntity{
         secondaryColor = builder.secondaryColor;
     }
 
+    /**
+     * entity registering method.
+     */
     public static void registerEntity(){
         for(EnumEntity value : values){
             EntityRegistry.registerModEntity(value.entityClass, value.name, value.ordinal(), SurviveInSociety.getInstance(), value.trackingRange, value.updateFrequency, value.sendsVelocityUpdates);
@@ -78,6 +81,9 @@ public enum EnumEntity{
         }
     }
 
+    /**
+     * render of entity registering method.
+     */
     @SideOnly(Side.CLIENT)
     public static void registerRender(){
         for(EnumEntity value : values){

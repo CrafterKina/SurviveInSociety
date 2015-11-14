@@ -29,6 +29,9 @@ public enum EnumVillageStructure{
         this(handler, (Class<? extends StructureVillagePieces.Village>) handler.getComponentClass());
     }
 
+    /**
+     * village structures registering method.
+     */
     public static void register(){
         for(EnumVillageStructure value : values){
             MapGenStructureIO.registerStructureComponent(value.component, SurviveInSociety.PARENT_PACKAGE + value.name());
