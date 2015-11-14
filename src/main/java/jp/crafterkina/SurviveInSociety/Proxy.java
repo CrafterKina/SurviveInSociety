@@ -6,10 +6,11 @@
 package jp.crafterkina.SurviveInSociety;
 
 import jp.crafterkina.SurviveInSociety.block.EnumBlock;
-import jp.crafterkina.SurviveInSociety.client.model.SISModelLoader;
+import jp.crafterkina.SurviveInSociety.client.model.SISModelLoaderRegistrar;
 import jp.crafterkina.SurviveInSociety.entity.EnumEntity;
 import jp.crafterkina.SurviveInSociety.event.EnumEventHandler;
 import jp.crafterkina.SurviveInSociety.guicontainer.EnumGuiContainer;
+import jp.crafterkina.SurviveInSociety.internal.SISInformation;
 import jp.crafterkina.SurviveInSociety.item.EnumItem;
 import jp.crafterkina.SurviveInSociety.world.structure.EnumStructure;
 import jp.crafterkina.SurviveInSociety.world.village.EnumVillageStructure;
@@ -20,6 +21,7 @@ public enum Proxy{
     Common{
         @Override
         public void preInit(FMLPreInitializationEvent event){
+            SISInformation.setLogger(event.getModLog());
             EnumEventHandler.register();
             EnumItem.registerItems();
             EnumBlock.registerBlocks();
@@ -29,19 +31,21 @@ public enum Proxy{
             EnumVillageStructure.register();
         }
     },
+    //@SideOnly(Side.SERVER)
     Server{
         @Override
         public boolean accept(Side side){
             return side.isServer();
         }
     },
+    //@SideOnly(Side.CLIENT)
     Client{
         @Override
         public void preInit(FMLPreInitializationEvent event){
             EnumBlock.registerModels();
             EnumItem.registerModels();
             EnumEntity.registerRender();
-            SISModelLoader.register();
+            SISModelLoaderRegistrar.register();
         }
 
         @Override

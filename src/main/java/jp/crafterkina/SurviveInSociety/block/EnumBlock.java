@@ -7,6 +7,7 @@ package jp.crafterkina.SurviveInSociety.block;
 
 import com.google.common.base.CaseFormat;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
+import jp.crafterkina.SurviveInSociety.block.blocks.BlockBulletinBoard;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -25,9 +26,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public enum EnumBlock{
+    BulletinBoard(new Builder(new BlockBulletinBoard()).setItem(null)),
     ;
 
     public static final EnumBlock[] values = values();
+    private static final Method main = ReflectionHelper.findMethod(GameData.class, null, new String[]{"getMain"});
+    private static final Method register = ReflectionHelper.findMethod(GameData.class, null, new String[]{"registerBlock"}, Block.class, String.class);
     private final Block block;
     private final Item item;
     private final String name;
@@ -48,12 +52,16 @@ public enum EnumBlock{
         this.name = name;
     }
 
+    EnumBlock(Builder builder){
+        block = builder.block;
+        item = builder.item;
+        name = builder.name != null ? builder.name : CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name());
+    }
+
     @SuppressWarnings("unchecked")
     public static void registerBlock(Block block, Item item, String name){
-        Method main = ReflectionHelper.findMethod(GameData.class, null, new String[]{"getMain"});
-        Method register = ReflectionHelper.findMethod(GameData.class, null, new String[]{"registerBlock"}, Block.class, String.class);
         try{
-            register.invoke(main, block, name);
+            register.invoke(main.invoke(null), block, name);
             if(item != null){
                 GameRegistry.registerItem(item, name);
                 GameData.getBlockItemMap().put(block, item);
@@ -75,7 +83,7 @@ public enum EnumBlock{
     public static void registerModels(){
         for(EnumBlock value : values){
             ItemMeshDefinition definition = value.registerModel();
-            if(definition == null) continue;
+            if(definition == null || value.item == null) continue;
             ModelLoader.setCustomMeshDefinition(value.item, definition);
         }
     }
@@ -86,5 +94,38 @@ public enum EnumBlock{
                 return new ModelResourceLocation(new ResourceLocation(SurviveInSociety.PARENT_PACKAGE, name), "inventory");
             }
         };
+    }
+
+    public Block getBlock(){
+        return block;
+    }
+
+    public Item getItem(){
+        return item;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    private static class Builder{
+        private Block block;
+        private Item item;
+        private String name = null;
+
+        private Builder(Block block){
+            this.block = block;
+            this.item = new ItemBlock(block);
+        }
+
+        public Builder setItem(Item item){
+            this.item = item;
+            return this;
+        }
+
+        public Builder setName(String name){
+            this.name = name;
+            return this;
+        }
     }
 }
