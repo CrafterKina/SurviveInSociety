@@ -8,6 +8,9 @@ package jp.crafterkina.SurviveInSociety.entity;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Supplier;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
+import jp.crafterkina.SurviveInSociety.client.entity.render.RenderReceptionist;
+import jp.crafterkina.SurviveInSociety.entity.entities.EntityReceptionist;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -18,6 +21,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public enum EnumEntity{
+    Receptionist(new Builder(EntityReceptionist.class).setRender(new Supplier<Render>(){
+        @Override
+        public Render get(){
+            return new RenderReceptionist(Minecraft.getMinecraft().getRenderManager());
+        }
+    })),
     ;
 
     public static final EnumEntity[] values = values();
