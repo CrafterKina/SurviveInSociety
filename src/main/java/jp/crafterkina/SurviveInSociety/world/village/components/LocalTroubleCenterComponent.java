@@ -86,6 +86,18 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
     }
 
     private boolean addTinyParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn){
+        addWallParts(worldIn, structureBoundingBoxIn);
+        addRoofParts(worldIn, structureBoundingBoxIn);
+        addDoors(worldIn, randomIn, structureBoundingBoxIn);
+        spawnReceptionist(worldIn);
+        EnumFacing facing = coordBaseMode.getAxis() == EnumFacing.Axis.Z ? EnumFacing.EAST : EnumFacing.SOUTH;
+        addSign(worldIn, structureBoundingBoxIn, facing);
+        addBulletinBoard(worldIn, facing);
+        upgrading(worldIn, structureBoundingBoxIn);
+        return true;
+    }
+
+    private void addWallParts(World worldIn, StructureBoundingBox structureBoundingBoxIn){
         this.func_175804_a(worldIn, structureBoundingBoxIn, 1, 0, 1, 4, 0, 7, Blocks.wooden_slab.getDefaultState(), Blocks.wooden_slab.getDefaultState(), false);
         this.func_175804_a(worldIn, structureBoundingBoxIn, 0, 0, 0, 5, 3, 0, Blocks.cobblestone.getDefaultState(), Blocks.cobblestone.getDefaultState(), false);
         this.func_175804_a(worldIn, structureBoundingBoxIn, 0, 0, 8, 5, 3, 8, Blocks.cobblestone.getDefaultState(), Blocks.cobblestone.getDefaultState(), false);
@@ -104,10 +116,16 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 2, 4, 8, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.planks.getDefaultState(), 3, 4, 8, structureBoundingBoxIn);
         this.setBlockState(worldIn, Blocks.iron_bars.getDefaultState(), 2, 2, 5, structureBoundingBoxIn);
+    }
+
+    private void spawnReceptionist(World worldIn){
         EntityReceptionist receptionist = new EntityReceptionist(worldIn);
         BlockPos pos = getFixedPos(new BlockPos(2, 1, 6));
         receptionist.setPosition(pos.getX(), pos.getY(), pos.getZ());
         worldIn.spawnEntityInWorld(receptionist);
+    }
+
+    private void addRoofParts(World worldIn, StructureBoundingBox structureBoundingBoxIn){
         int i = this.getMetadataWithOffset(Blocks.oak_stairs, 0);
         int j = this.getMetadataWithOffset(Blocks.oak_stairs, 1);
         int k;
@@ -119,21 +137,14 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
                 this.setBlockState(worldIn, Blocks.oak_stairs.getStateFromMeta(j), 5 - k, 4 + k, l, structureBoundingBoxIn);
             }
         }
+    }
 
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//�\
-
-        EnumFacing facing = coordBaseMode.getAxis() == EnumFacing.Axis.Z ? EnumFacing.EAST : EnumFacing.SOUTH;
+    private void addSign(World worldIn, StructureBoundingBox structureBoundingBoxIn, EnumFacing facing){
         this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing.getOpposite()), -1, 2, 3, structureBoundingBoxIn);
         BlockPos blockpos = getFixedPos(new BlockPos(-1, 2, 3));
         if(worldIn.getTileEntity(blockpos) != null){
             ((TileEntitySign) worldIn.getTileEntity(blockpos)).signText[1] = new ChatComponentText("Enter");
         }
-        for(k = 1; k <= 4; k++){
-            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 2, k)), facing);
-            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 3, k)), facing);
-        }
-
-        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);//��
 
         this.setBlockState(worldIn, Blocks.wall_sign.getDefaultState().withProperty(BlockWallSign.FACING, facing), 6, 2, 6, structureBoundingBoxIn);
         blockpos = getFixedPos(new BlockPos(6, 2, 6));
@@ -144,14 +155,27 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
             sign.signText[2] = new ChatComponentText("ONLY");
             sign.signText[3] = new ChatComponentText("--×--×--×--×--×--×--");
         }
+    }
 
-        for(k = 0; k < 8; ++k){
-            for(l = 0; l < 6; ++l){
+    private void addBulletinBoard(World worldIn, EnumFacing facing){
+        for(int k = 1; k <= 4; k++){
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 2, k)), facing);
+            BlockBulletinBoard.setBulletinBord(worldIn, getFixedPos(new BlockPos(4, 3, k)), facing);
+        }
+    }
+
+    private void upgrading(World worldIn, StructureBoundingBox structureBoundingBoxIn){
+        for(int k = 0; k < 8; ++k){
+            for(int l = 0; l < 6; ++l){
                 this.clearCurrentPositionBlocksUpwards(worldIn, l, 7, k, structureBoundingBoxIn);
                 this.replaceAirAndLiquidDownwards(worldIn, Blocks.cobblestone.getDefaultState(), l, -1, k, structureBoundingBoxIn);
             }
         }
-        return true;
+    }
+
+    private void addDoors(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn){
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 0, 1, 2, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);
+        this.placeDoorCurrentPosition(worldIn, structureBoundingBoxIn, randomIn, 5, 1, 6, EnumFacing.getHorizontal(this.getMetadataWithOffset(Blocks.iron_door, 0)), Blocks.iron_door);
     }
 
     protected void placeDoorCurrentPosition(World worldIn, StructureBoundingBox boundingBoxIn, Random rand, int x, int y, int z, EnumFacing facing, Block door){
