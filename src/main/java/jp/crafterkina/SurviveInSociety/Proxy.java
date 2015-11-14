@@ -41,7 +41,7 @@ public enum Proxy{
     //@SideOnly(Side.CLIENT)
     Client{
         @Override
-        public void preInit(FMLPreInitializationEvent event){
+        public void init(FMLInitializationEvent event){
             EnumBlock.registerModels();
             EnumItem.registerModels();
             EnumEntity.registerRender();
