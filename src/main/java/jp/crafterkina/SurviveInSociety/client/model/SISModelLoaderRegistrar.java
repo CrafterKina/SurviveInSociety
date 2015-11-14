@@ -26,6 +26,9 @@ import java.util.Collection;
 import java.util.Map;
 
 public class SISModelLoaderRegistrar{
+    /**
+     * special model with model loader registering method.
+     */
     public static void register(){
         Multimap<Class<? extends IModel>,ResourceLocation> map = HashMultimap.create();
         HasCustomModel annotation;
@@ -69,11 +72,22 @@ public class SISModelLoaderRegistrar{
         };
     }
 
+    /**
+     * annotate block or item that has custom model.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface HasCustomModel{
+        /**
+         * @return raw model class.
+         */
         Class<? extends IModel> value();
 
+        /**
+         * Normally, do not need to be specified.
+         *
+         * @return path following "models/block/".(you mustn't put "models/block/" in front)
+         */
         String location() default "";
     }
 

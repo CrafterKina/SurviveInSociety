@@ -9,6 +9,9 @@ import jp.crafterkina.SurviveInSociety.world.structure.EnumStructure;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * generating terrain event handler
+ */
 public enum TerrainGenEventHandler{
     instance;
 

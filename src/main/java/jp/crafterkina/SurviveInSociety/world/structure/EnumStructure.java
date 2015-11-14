@@ -30,6 +30,9 @@ public enum EnumStructure{
         this.components = components;
     }
 
+    /**
+     * structures registering method.
+     */
     public static void register(){
         for(EnumStructure value : values){
             if(value.onRegister()){
@@ -42,6 +45,12 @@ public enum EnumStructure{
         }
     }
 
+    /**
+     * on populating chunk.
+     *
+     * @param event
+     *         the PopulateChunkEvent
+     */
     public static void tryGen(PopulateChunkEvent.Pre event){
         for(EnumStructure value : values){
             value.generate(event);

@@ -5,6 +5,9 @@
 
 package jp.crafterkina.SurviveInSociety.event.handler;
 
+/**
+ * low layer event handler
+ */
 public enum FMLEventHandler{
     instance
 }

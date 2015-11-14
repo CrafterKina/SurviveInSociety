@@ -8,6 +8,14 @@ package jp.crafterkina.SurviveInSociety.client.model.state;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+/**
+ * use easier than {@link UnlistedPropertyBase}
+ *
+ * @param <T>
+ *         contains type.
+ * @see jp.crafterkina.SurviveInSociety.client.model.state.UnlistedPropertyBase
+ * @see net.minecraftforge.common.property.IUnlistedProperty
+ */
 public class PropertyGeneral<T> extends UnlistedPropertyBase<T>{
     private final Class<T> type;
 
