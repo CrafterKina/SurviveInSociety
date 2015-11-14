@@ -21,7 +21,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public enum EnumEntity{
-    Receptionist(new Builder(EntityReceptionist.class, new RenderReceptionist(Minecraft.getMinecraft().getRenderManager()))),
+    Receptionist(new Builder(EntityReceptionist.class).setRender(new Supplier<Render>(){
+        @Override
+        public Render get(){
+            return new RenderReceptionist(Minecraft.getMinecraft().getRenderManager());
+        }
+    })),
     ;
 
     public static final EnumEntity[] values = values();
