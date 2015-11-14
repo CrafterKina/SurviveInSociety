@@ -52,7 +52,7 @@ public class LocalTroubleCenterComponent extends StructureVillagePieces.Village 
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
-        return new StructureVillagePieces.PieceWeight(LocalTroubleCenterComponent.class, 20, MathHelper.getRandomIntegerInRange(random, i, i + 1));
+        return new StructureVillagePieces.PieceWeight(LocalTroubleCenterComponent.class, 4, MathHelper.getRandomIntegerInRange(random, 2 + i, 4 + i * 2));
     }
 
     @Override
