@@ -55,6 +55,7 @@ public enum EnumItem{
     /**
      * on registering model. you can override and do something.
      */
+    @SideOnly(Side.CLIENT)
     protected void registerModel(){
         ItemMeshDefinition definition = new ItemMeshDefinition(){
             public ModelResourceLocation getModelLocation(ItemStack stack){

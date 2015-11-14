@@ -108,6 +108,7 @@ public enum EnumBlock{
      *
      * @return model of item block
      */
+    @SideOnly(Side.CLIENT)
     protected ItemMeshDefinition registerModel(){
         return new ItemMeshDefinition(){
             public ModelResourceLocation getModelLocation(ItemStack stack){
