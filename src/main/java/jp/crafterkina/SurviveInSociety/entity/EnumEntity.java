@@ -7,10 +7,10 @@ package jp.crafterkina.SurviveInSociety.entity;
 
 import com.google.common.base.CaseFormat;
 import jp.crafterkina.SurviveInSociety.SurviveInSociety;
-import jp.crafterkina.SurviveInSociety.entity.entities.common.EntityReceptionist;
+import jp.crafterkina.SurviveInSociety.client.entity.render.RenderReceptionist;
+import jp.crafterkina.SurviveInSociety.entity.entities.EntityReceptionist;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public enum EnumEntity{
-    Receptionist(new Builder(EntityReceptionist.class, new RenderPlayer(Minecraft.getMinecraft().getRenderManager(), true))),
+    Receptionist(new Builder(EntityReceptionist.class, new RenderReceptionist(Minecraft.getMinecraft().getRenderManager()))),
     ;
 
     public static final EnumEntity[] values = values();

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package jp.crafterkina.SurviveInSociety.entity.entities.common;
+package jp.crafterkina.SurviveInSociety.entity.entities;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.INpc;
