@@ -1,5 +1,6 @@
 package jp.crafterkina.SurviveInSociety;
 
+import jp.crafterkina.SurviveInSociety.block.BlockRegisterer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.InstanceFactory;
@@ -29,6 +30,7 @@ public enum SurviveInSociety{
 
     @EventHandler
     private void preInit(FMLPreInitializationEvent event){
+        BlockRegisterer.register();
     }
 
     @EventHandler
