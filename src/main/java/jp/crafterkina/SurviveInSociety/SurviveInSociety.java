@@ -5,9 +5,11 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.InstanceFactory;
 import net.minecraftforge.fml.common.event.*;
 
-@Mod(modid = "jp.crafterkina.SurviveInSociety")
+@Mod(modid = SurviveInSociety.MOD_ID)
 public enum SurviveInSociety{
     INSTANCE;
+
+    public static final String MOD_ID = "jp.crafterkina.SurviveInSociety";
 
     @InstanceFactory
     private static SurviveInSociety getInstance(){
