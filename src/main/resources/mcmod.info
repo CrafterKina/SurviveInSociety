@@ -1,0 +1,16 @@
+[
+{
+  "modid": "jp.crafterkina.SurviveInSociety",
+  "name": "Survive In Society",
+  "description": "Now, you are in society!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://crafterkina.github.io/SurviveInSociety/",
+  "updateUrl": "",
+  "authorList": ["CrafterKina"],
+  "credits": "The Contributors",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
