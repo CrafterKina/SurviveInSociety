@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults":{},
+  "variants": {
+    "normal": {
+      "model": "torch",
+      "textures": {
+        "torch": "blocks/torch_on"
+      }
+    },
+    "inventory": {
+      "model": "block",
+      "textures": {
+        "layer0": "blocks/torch_on"
+      },
+      "transform": "forge:default-item"
+    }
+  }
+}

@@ -5,7 +5,10 @@ import jp.crafterkina.SurviveInSociety.client.tesr.TESRCapitalTorch;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -14,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -23,17 +27,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import static jp.crafterkina.SurviveInSociety.SurviveInSociety.*;
 
 public class BlockCapitalTorch extends BlockContainer{
+    public static BlockCapitalTorch INSTANCE;
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.4D, 0.0D, 0.4D, 0.6D, 0.6D, 0.6D);
+
     private BlockCapitalTorch(){
         super(Material.circuits);
         setCreativeTab(CreativeTabs.tabDecorations);
+        setUnlocalizedName(MOD_ID+".capital_torch");
     }
 
     public static void register(){
-        GameRegistry.register(new BlockCapitalTorch(),new ResourceLocation(MOD_ID,"capital_torch"));
-        GameRegistry.registerTileEntity(TileEntityCapitalTorch.class,new ResourceLocation(MOD_ID,"capital_torch").toString());
+        GameRegistry.register(new ItemBlock(INSTANCE=GameRegistry.register(new BlockCapitalTorch(), new ResourceLocation(MOD_ID, "capital_torch"))).setFull3D(),new ResourceLocation(MOD_ID,"capital_torch"));
+        GameRegistry.registerTileEntity(TileEntityCapitalTorch.class, new ResourceLocation(MOD_ID, "capital_torch").toString());
         if(FMLCommonHandler.instance().getSide().isClient()){
-            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCapitalTorch.class,new TESRCapitalTorch());
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(INSTANCE), 0, new ModelResourceLocation(new ResourceLocation(MOD_ID,"capital_torch"), "inventory"));
+            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCapitalTorch.class, new TESRCapitalTorch());
         }
     }
 
